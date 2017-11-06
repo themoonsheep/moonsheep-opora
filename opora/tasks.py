@@ -13,7 +13,17 @@ class AbstractTask():
         # TODO
         pass
 
+    def get_presenter(self, task_data):
+        """
+        Returns presenter based on task data. Default presenter depends on the url MIME Type
+        :return:
+        """
+        task_data['url']
+        mimetype = 'pdf' # compute mimetype from url extension
 
+        if "exists moonsheep.presenters.{mimetype}":
+            return "moonsheep.presenters.{mimetype}"
+        raise "PresenterNotDefined()"
 
     # TODO think how to serve this data
     def save_verified_data(self, outcome, confidence, verified_data):
@@ -31,7 +41,7 @@ class AbstractTask():
 
 class UnorderedSetVerifier:
     def __init__(self, field_name):
-        this.field_name = field_name
+        self.field_name = field_name
 
     def __call__(self, *args, **kwargs):
         # return [1,2,3,4]
@@ -42,6 +52,7 @@ class UnorderedSetVerifier:
 # task_type = 'find_table'
 # task = FindTableTask()
 # task.get_form() ->
+# task.get_presenter(pybossa.task_data)
 #
 # # Flow 4. Verify task runs of a given task
 # # input
@@ -68,6 +79,9 @@ class FindTableTask(AbstractTask):
     def save_verified_data(self, outcome, confidence, verified_data):
         # TODO map verified data to models/Report and models/Party
         pass
+
+    def get_presenter(self):
+        return presenter.PDFViewer()
 
 
 class GetTransactionIdsTask(AbstractTask):
