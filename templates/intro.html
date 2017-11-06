@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>You're about to open political parties donations!</h1>
+
+  <ul>
+    <li>This is a game but also a tool that will help us distribute public information about politicians</li>
+    <li>Be as accurate as you can, because your answers will be verified</li>
+    <li>Before submitting your answers double check them</li>
+    <li>After submitting enough surveys you will be rewarded!</li>
+    <li>When you decide it's enough, we will provide you a feedback</li>
+  </ul>
+
+  <form action="/transcription/">
+    <button type="submit">Let's do this!</button>
+  </form>
+
+{% endblock %}
