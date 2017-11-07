@@ -5,8 +5,16 @@ from moonsheep.verifiers import UnorderedSetVerifier
 class FindTableTask(AbstractTask):
     """
     Choose pages containing crucial tables and get metadata (party, date)
+    PyBossa task structure:
+    {
+        "url": "https://epf.org.pl/pl/wp-content/themes/epf/images/logo-epanstwo.png",
+        "party": "",
+        "type": "opora.tasks.FindTableTask",
+        "page": "",
+        "record_id": ""
+    }
     """
-    template_name = 'find_table.html'
+    template_name = 'tasks/find_table.html'
 
     def save_verified_data(self, outcome, confidence, verified_data):
         # TODO map verified data to models/Report and models/Party
@@ -20,8 +28,16 @@ class FindTableTask(AbstractTask):
 class GetTransactionIdsTask(AbstractTask):
     """
     List IDs of transactions on a page X
+    PyBossa task structure:
+    {
+        "url": "https://epf.org.pl/pl/wp-content/themes/epf/images/logo-epanstwo.png",
+        "party": "1",
+        "type": "opora.tasks.GetTransactionIdsTask",
+        "page": "1",
+        "record_id": ""
+    }
     """
-    template_name = 'get_transaction_ids.html'
+    template_name = 'tasks/get_transaction_ids.html'
 
     def verify_ids_list(self, task_runs):
         # Custom implementation that checks for equality of unordered list
@@ -36,5 +52,13 @@ class GetTransactionIdsTask(AbstractTask):
 class GetTransactionTask(AbstractTask):
     """
     Get transaction idY
+    PyBossa task structure:
+    {
+        "url": "https://epf.org.pl/pl/wp-content/themes/epf/images/logo-epanstwo.png",
+        "party": "1",
+        "type": "opora.tasks.GetTransactionTask",
+        "page": "1",
+        "record_id": "1"
+    }
     """
-    template_name = 'get_transaction.html'
+    template_name = 'tasks/get_transaction.html'

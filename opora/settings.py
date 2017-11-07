@@ -125,29 +125,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MOONSHEEP_TASKS = [
-    {
-        'fields': [
-            'opora.Report.document_page_start',
-            'opora.Report.document_page_end',
-            'opora.Report.party',  # TODO connect with PoliticalParty
-            'opora.PoliticalParty.legal_id',  # TODO connect with Report
-            'opora.PoliticalParty.name'
-        ]
-    },
-    {
-        'fields': [
-            'opora.Transaction.local_id'
-        ]
-    },
-    {
-        'fields': [
-            'opora.Transaction.transaction_type',  # TODO sure?
-            'opora.Transaction.money_destination',  # TODO sure?
-            'opora.Transaction.receipt_date',
-            'opora.Transaction.payee',
-            'opora.Transaction.amount',
-            'opora.Transaction.total_funds_received',
-        ]
-    }
-]
+# moonsheep settings
+# MOONSHEEP_TASK_SOURCE = 'random'  # 'random' / 'pybossa' -> default 'random'
+
+# if pybossa is selected
+PYBOSSA_URL = 'http://localhost:5000'
+PYBOSSA_PROJECT_ID = 1
+PYBOSSA_API_KEY = os.environ.get('PYBOSSA_API_KEY')
