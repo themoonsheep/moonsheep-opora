@@ -17,4 +17,4 @@ class MissionView(TemplateView):
 
 
 class TranscriptionView(TaskView):
-    template_name = 'transcription.html'
+    pass

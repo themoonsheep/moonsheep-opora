@@ -95,6 +95,8 @@ class Transaction(models.Model):
     transaction_type = models.PositiveIntegerField(verbose_name=_('transaction type'), default=CASH_CONTRIBUTION)
     money_destination = models.PositiveIntegerField(verbose_name=_('money destination'), default=MONEY_DESTINATIONS)
 
+    report = models.ForeignKey(to='opora.Report', verbose_name=_('report'), on_delete=models.PROTECT)
+
     # ID of transaction from table in document
     local_id = models.PositiveIntegerField(verbose_name=_('our id')) # TODO: is it unique?
     # Page number containing table with transaction in document
