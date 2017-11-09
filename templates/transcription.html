@@ -1,27 +1,5 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="col-1">
-    presenter - {{ presenter }}
-  </div>
-  <div class="col-2">
-    task - {{ task }}
-  </div>
-
-{#  <h3>#}
-{#    <small>Some mockup</small><br />#}
-{#    Q: Find pages in the document containing party donations#}
-{#  </h3>#}
-{#  <input type="number" /> - <input type="number" />#}
-{#  <h3>Q: Type ids of party leaders donations:</h3>#}
-{#  <input type="number" /> <br />#}
-{#  <input type="number" /> <br />#}
-{#  <input type="number" /> <br />#}
-{#  <input type="number" /> <br /> <br />#}
-  <form action="/mission/" style="float: left;">
-    <button type="submit">Finish for today</button>
-  </form>
-  <form action="/transcription/" style="float: left;">
-    <button type="submit">Send & give me one more</button>
-  </form>
+  {% include "tasks/base_form.html" %}
 {% endblock %}

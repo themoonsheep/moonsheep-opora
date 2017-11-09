@@ -1,10 +1,20 @@
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 60px;">
   <div class="row">
     <div class="col-md-6">
-      {{ presenter }}
+      {% include presenter_template %}
     </div>
     <div class="col-md-6">
-      {{ form }}
+      <div class="row2">
+        {{ task }}
+      </div>
+      <div class="row2">
+        <form action="/mission/" style="float: left;">
+          <button class="btn btn-info" type="submit">Finish for today</button>
+        </form>
+        <form action="/transcription/" style="float: left;">
+          <button class="btn btn-info" type="submit">Send & give me one more</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

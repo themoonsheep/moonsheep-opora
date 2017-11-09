@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'moonsheep',
-    'opora'
+    'opora',
 ]
 
 MIDDLEWARE = [
