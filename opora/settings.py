@@ -125,12 +125,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATICFILES_LOCATION = 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 STATIC_URL = '/static/'
 
 # moonsheep settings
-# MOONSHEEP_TASK_SOURCE = 'random'  # 'random' / 'pybossa' -> default 'random'
+MOONSHEEP_TASK_SOURCE = 'pybossa'  # 'random' / 'pybossa' -> default 'random'
 
 # if pybossa is selected
-PYBOSSA_URL = 'http://localhost:5000'
+PYBOSSA_URL = 'http://localhost:5000/'
 PYBOSSA_PROJECT_ID = 1
 PYBOSSA_API_KEY = os.environ.get('PYBOSSA_API_KEY')

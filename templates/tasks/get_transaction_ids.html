@@ -1,1 +1,7 @@
-{% extends "tasks/base_form.html" %}
+{% block task-form %}
+<div class="form-group">
+  <label for="tIDs">Provide transaction IDs</label>
+  <input type="text" class="form-control" id="tIDs" aria-describedby="tIDsHelp" placeholder="Transaction IDs">
+  <small id="tIDsHelp" class="form-text text-muted">Some helper for this task.</small>
+</div>
+{% endblock %}

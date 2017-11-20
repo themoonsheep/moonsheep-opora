@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.urls import reverse
 from django.views.generic import TemplateView
 
 from moonsheep.views import TaskView
@@ -18,3 +19,6 @@ class MissionView(TemplateView):
 
 class TranscriptionView(TaskView):
     template_name = 'transcription.html'
+
+    def get_success_url(self):
+        return reverse('transcription')

@@ -1,1 +1,24 @@
-{% extends "tasks/base_form.html" %}
+{% block task-form %}
+<h3>Report</h3>
+<div class="form-group">
+  <label for="reportDate">Find report date</label>
+  <input type="date" class="form-control" id="reportDate" aria-describedby="reportDateHelp" placeholder="Enter report date">
+  <small id="reportDateHelp" class="form-text text-muted">Some helper for this task.</small>
+</div>
+<h3>Party</h3>
+<div class="form-group">
+  <label for="partyName">Find party name</label>
+  <input type="text" class="form-control" id="partyName" aria-describedby="partyNameHelp" placeholder="Enter party name">
+  <small id="partyNameHelp" class="form-text text-muted">Some helper for this task.</small>
+</div>
+<div class="form-group">
+  <label for="partyID">Find party legal ID</label>
+  <input type="text" class="form-control" id="partyID" aria-describedby="partyIDHelp" placeholder="Enter party legal ID">
+  <small id="partyIDHelp" class="form-text text-muted">Should be under the name, i.e. pID-921.</small>
+</div>
+<div class="form-group">
+  <label for="transactionPages">Find pages containing donation transactions</label>
+  <input type="text" class="form-control" id="transactionPages" aria-describedby="transactionPagesHelp" placeholder="Enter page numbers">
+  <small id="transactionPagesHelp" class="form-text text-muted">Pages should be provided in format: (1-3,5,10-12).</small>
+</div>
+{% endblock %}

@@ -1,6 +1,8 @@
 from moonsheep.tasks import AbstractTask
 from moonsheep.verifiers import UnorderedSetVerifier
 
+from .forms import FindTableForm, GetTransactionIdsForm, GetTransactionForm
+
 
 class FindTableTask(AbstractTask):
     """
@@ -14,7 +16,8 @@ class FindTableTask(AbstractTask):
         "record_id": ""
     }
     """
-    template_name = 'tasks/find_table.html'
+    task_template = 'tasks/find_table.html'
+    task_form = FindTableForm
 
     def save_verified_data(self, outcome, confidence, verified_data):
         # TODO map verified data to models/Report and models/Party
@@ -37,7 +40,8 @@ class GetTransactionIdsTask(AbstractTask):
         "record_id": ""
     }
     """
-    template_name = 'tasks/get_transaction_ids.html'
+    task_template = 'tasks/get_transaction_ids.html'
+    task_form = GetTransactionIdsForm
 
     def verify_ids_list(self, task_runs):
         # Custom implementation that checks for equality of unordered list
@@ -61,4 +65,5 @@ class GetTransactionTask(AbstractTask):
         "record_id": "1"
     }
     """
-    template_name = 'tasks/get_transaction.html'
+    task_template = 'tasks/get_transaction.html'
+    task_form = GetTransactionForm

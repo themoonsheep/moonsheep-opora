@@ -1,1 +1,16 @@
-{% extends "tasks/base_form.html" %}
+{% block task-form %}
+<div class="form-group">
+  <label for="transactionDate">Find transaction date</label>
+  <input type="date" class="form-control" id="transactionDate" aria-describedby="transactionDateHelp" placeholder="Enter transaction date">
+  <small id="transactionDateHelp" class="form-text text-muted">Some helper for this task.</small>
+</div>
+<div class="form-group">
+  <label for="value">Find transaction value</label>
+  <input type="text" class="form-control" id="value" aria-describedby="valueHelp" placeholder="Enter transaction value">
+  <small id="valueHelp" class="form-text text-muted">Shouldn't contain currency and be divided by a dot. i.e. 4299.99</small>
+</div>
+<div class="form-group">
+  <label for="exampleInputPassword1">Password</label>
+  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+</div>
+{% endblock %}
