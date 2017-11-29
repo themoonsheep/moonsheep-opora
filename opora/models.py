@@ -50,7 +50,7 @@ class Report(models.Model):
     # transaction_set
 
     def __str__(self):
-        return self.report_date
+        return '{0}'.format(self.report_date)
 
     @property
     def moonsheep_tasks(self):

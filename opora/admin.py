@@ -7,12 +7,12 @@ from .models import (
 
 @admin.register(PoliticalParty)
 class PoliticalPartyAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['name', 'legal_id']
 
 
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['report_date', 'party', 'document_page_start']
 
 
 @admin.register(Transaction)

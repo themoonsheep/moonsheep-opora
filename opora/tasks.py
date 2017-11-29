@@ -1,7 +1,10 @@
+import datetime
+
 from moonsheep.tasks import AbstractTask
-from moonsheep.verifiers import UnorderedSetVerifier
+from moonsheep.verifiers import *
 
 from .forms import FindTableForm, GetTransactionIdsForm, GetTransactionForm
+from .models import PoliticalParty, Report, Transaction, Payee
 
 
 class FindTableTask(AbstractTask):
@@ -19,9 +22,25 @@ class FindTableTask(AbstractTask):
     task_template = 'tasks/find_table.html'
     task_form = FindTableForm
 
-    def save_verified_data(self, outcome, confidence, verified_data):
-        # TODO map verified data to models/Report and models/Party
-        pass
+    verify_page = EqualsVerifier
+
+    def verify_party_name(self, values):
+        return values[0], 1
+
+    def save_verified_data(self, verified_data):
+        party, created = PoliticalParty.objects.get_or_create(
+            name=verified_data['party_name'],
+            legal_id=verified_data['party_legal_id']
+        )
+        Report.objects.get_or_create(
+            report_date=datetime.datetime.strptime(verified_data['report_date'], "%Y-%m-%d"),
+            party=party,
+            document_page_start=verified_data['page']
+        )
+
+    def after_save(self, verified_data):
+        self.create_new_task(GetTransactionTask, **verified_data)
+
 
     def get_presenter(self):
         return None
@@ -50,7 +69,14 @@ class GetTransactionIdsTask(AbstractTask):
         # return [1,2,3,10]
         pass
 
-    verify_ids_list = UnorderedSetVerifier('ids') # Verifier must need to know on which field to operate
+    verify_ids_list = UnorderedSetVerifier('ids')  # Verifier must need to know on which field to operate
+
+    # def save_verified_data(self, verified_data):
+    #     # TODO: finish & test
+    #     for transaction_id in verified_data['transaction_ids']:
+    #         Transaction.objects.get_or_create(
+    #             local_id=transaction_id
+    #         )
 
 
 class GetTransactionTask(AbstractTask):
@@ -67,3 +93,12 @@ class GetTransactionTask(AbstractTask):
     """
     task_template = 'tasks/get_transaction.html'
     task_form = GetTransactionForm
+
+    # def save_verified_data(self, verified_data):
+    #     # TODO: finish & test
+    #     transaction = Transaction.objects.get(pk=1)
+    #     transaction.receipt_date = verified_data['transaction_date']
+    #     transaction.amount = verified_data['transaction_value']
+    #     transaction.payee = verified_data['transaction_donor']
+    #     transaction.save()
+
