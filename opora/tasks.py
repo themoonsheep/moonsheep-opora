@@ -41,7 +41,6 @@ class FindTableTask(AbstractTask):
     def after_save(self, verified_data):
         self.create_new_task(GetTransactionTask, **verified_data)
 
-
     def get_presenter(self):
         return None
         # return presenter.PDFViewer()

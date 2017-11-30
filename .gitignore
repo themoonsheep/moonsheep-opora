@@ -4,3 +4,4 @@ secret
 __pycache__
 db.sqlite3
 env_var.txt
+.env
