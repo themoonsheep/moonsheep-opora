@@ -1,2 +1,4 @@
-django==2.0b1
-ipython
+--index-url https://pypi.python.org/simple/
+
+django~=2.0
+git+https://github.com/TransparenCEE/moonsheep#egg=django-moonsheep
