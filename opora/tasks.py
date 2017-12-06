@@ -39,10 +39,17 @@ class FindTableTask(AbstractTask):
         )
 
     def after_save(self, verified_data):
-        self.create_new_task(GetTransactionTask, **verified_data)
+        # TODO: 'type' is now reserved key in task params
+        print(verified_data)
+        params = {
+            'page': verified_data['page'],
+            # 'url': ve
+        }
+        # task = self.create_new_task(GetTransactionTask, params)
+        # print(task)
 
-    def get_presenter(self):
-        return None
+    # def get_presenter(self):
+        # return None
         # return presenter.PDFViewer()
 
 

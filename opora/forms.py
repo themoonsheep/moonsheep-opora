@@ -3,10 +3,7 @@ from django import forms
 
 class FindTableForm(forms.Form):
     page = forms.IntegerField(label='Page number')
-    # report_date = forms.DateField(label='Report date')
     report_date = forms.CharField(label='Report date', widget=forms.SelectDateWidget)
-    # try verifiers in forms
-    # party_name = forms.CharField(label='Party name', verifier=EqualsVerifier)
     party_name = forms.CharField(label='Party name')
     party_legal_id = forms.CharField(label='Party legal ID')
 

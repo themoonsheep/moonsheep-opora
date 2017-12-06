@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from .tasks import *
 from .views import (
     HomeView, IntroView, TranscriptionView, MissionView
 )

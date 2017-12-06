@@ -1,2 +1,2 @@
-django==2.0b1
+django==2.0
 ipython
