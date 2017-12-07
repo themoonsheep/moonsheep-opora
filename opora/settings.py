@@ -134,9 +134,9 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 
 # moonsheep settings
-MOONSHEEP_TASK_SOURCE = 'random'  # 'random' / 'pybossa' -> default 'random'
+MOONSHEEP_TASK_SOURCE = 'pybossa'  # 'random' / 'pybossa' -> default 'random'
 
 # if pybossa is selected
 PYBOSSA_URL = 'http://localhost:5000/'
-PYBOSSA_PROJECT_ID = 7
+PYBOSSA_PROJECT_ID = 8
 PYBOSSA_API_KEY = os.environ.get('PYBOSSA_API_KEY')

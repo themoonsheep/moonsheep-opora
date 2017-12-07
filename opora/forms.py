@@ -13,6 +13,6 @@ class GetTransactionIdsForm(forms.Form):
 
 
 class GetTransactionForm(forms.Form):
-    transaction_date = forms.DateField(label='Transaction date')
-    transaction_value = forms.DecimalField(label='Transaction value')
+    transaction_date = forms.CharField(label='Transaction date')
+    transaction_value = forms.CharField(label='Transaction value')
     transaction_donor = forms.CharField(label='Transaction donor')

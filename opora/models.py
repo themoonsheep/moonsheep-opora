@@ -8,7 +8,7 @@ class PoliticalParty(models.Model):
     Political party
     """
     name = models.CharField(verbose_name=_('name'), max_length=100)
-    legal_id = models.PositiveIntegerField(verbose_name=_('local id'), unique=True) # is it really unique?
+    legal_id = models.PositiveIntegerField(verbose_name=_('local id'))
 
     def __str__(self):
         return self.name
@@ -92,15 +92,15 @@ class Transaction(models.Model):
     )
 
     # maybe should be nullable
-    transaction_type = models.PositiveIntegerField(verbose_name=_('transaction type'), default=CASH_CONTRIBUTION)
-    money_destination = models.PositiveIntegerField(verbose_name=_('money destination'), default=MONEY_DESTINATIONS)
+    transaction_type = models.PositiveIntegerField(verbose_name=_('transaction type'), null=True, blank=True)
+    money_destination = models.PositiveIntegerField(verbose_name=_('money destination'), null=True, blank=True)
 
-    report = models.ForeignKey(to='opora.Report', verbose_name=_('report'), on_delete=models.PROTECT)
+    report = models.ForeignKey(to='opora.Report', verbose_name=_('report'), on_delete=models.PROTECT, null=True, blank=True)
 
     # ID of transaction from table in document
-    local_id = models.PositiveIntegerField(verbose_name=_('our id')) # TODO: is it unique?
+    local_id = models.CharField(verbose_name=_('our id'), max_length=10, null=True, blank=True)
     # Page number containing table with transaction in document
-    page_number = models.PositiveIntegerField(verbose_name=_('page number containing table with transaction'))
+    page_number = models.PositiveIntegerField(verbose_name=_('page number containing table with transaction'), null=True, blank=True)
     # Party that transaction concerns. Field copied from the Report.
     party = models.ForeignKey(
         to='opora.PoliticalParty', verbose_name=_('related parties'), null=True, blank=True, on_delete=models.PROTECT
@@ -113,9 +113,11 @@ class Transaction(models.Model):
     payee = models.ForeignKey(
         to='opora.Payee', verbose_name=_('payee name'), null=True, blank=True, on_delete=models.PROTECT
     )
-    amount = models.DecimalField(verbose_name=_('amount'), max_digits='12', decimal_places='2')
+    amount = models.DecimalField(
+        verbose_name=_('amount'), max_digits='12', decimal_places='2', null=True, blank=True
+    )
     total_funds_received = models.DecimalField(
-        verbose_name=_('total funds received'), max_digits='12', decimal_places='2'
+        verbose_name=_('total funds received'), max_digits='12', decimal_places='2', null=True, blank=True
     )
 
     def __str__(self):

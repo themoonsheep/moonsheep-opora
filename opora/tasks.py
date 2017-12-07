@@ -19,7 +19,7 @@ class FindTableTask(AbstractTask):
         "record_id": ""
     }
     """
-    task_template = 'tasks/find_table.html'
+    # task_template = 'tasks/find_table.html'
     task_form = FindTableForm
 
     verify_page = EqualsVerifier
@@ -39,18 +39,16 @@ class FindTableTask(AbstractTask):
         )
 
     def after_save(self, verified_data):
-        # TODO: 'type' is now reserved key in task params
-        print(verified_data)
         params = {
             'page': verified_data['page'],
-            # 'url': ve
+            'url': self.url
         }
-        # task = self.create_new_task(GetTransactionTask, params)
-        # print(task)
+        task = self.create_new_task(GetTransactionIdsTask, params)
+        print(task)
 
-    # def get_presenter(self):
-        # return None
-        # return presenter.PDFViewer()
+    # # def get_presenter(self):
+    #     # return None
+    #     return presenter.PDFViewer()
 
 
 class GetTransactionIdsTask(AbstractTask):
@@ -65,24 +63,39 @@ class GetTransactionIdsTask(AbstractTask):
         "record_id": ""
     }
     """
-    task_template = 'tasks/get_transaction_ids.html'
+    # task_template = 'tasks/get_transaction_ids.html'
     task_form = GetTransactionIdsForm
+
+    def __init__(self, **kwargs):
+        super(GetTransactionIdsTask, self).__init__(**kwargs)
+        self.page = kwargs.get('page')
 
     def verify_ids_list(self, task_runs):
         # Custom implementation that checks for equality of unordered list
         # task_runs[0]['ids'] == task_runs[x]['ids']
 
         # return [1,2,3,10]
-        pass
+        return task_runs, 1
 
     verify_ids_list = UnorderedSetVerifier('ids')  # Verifier must need to know on which field to operate
 
-    # def save_verified_data(self, verified_data):
-    #     # TODO: finish & test
-    #     for transaction_id in verified_data['transaction_ids']:
-    #         Transaction.objects.get_or_create(
-    #             local_id=transaction_id
-    #         )
+    def save_verified_data(self, verified_data):
+        # TODO: finish & test
+        for transaction_id in verified_data['transaction_ids'].split(','):
+            print(transaction_id)
+            print(type(transaction_id))
+            Transaction.objects.get_or_create(
+                local_id=transaction_id
+            )
+
+    def after_save(self, verified_data):
+        for transaction_id in verified_data['transaction_ids'].split(','):
+            params = {
+                'transaction_id': transaction_id,
+                'page': self.page,
+                'url': self.url
+            }
+            task = self.create_new_task(GetTransactionTask, params)
 
 
 class GetTransactionTask(AbstractTask):
@@ -100,11 +113,17 @@ class GetTransactionTask(AbstractTask):
     task_template = 'tasks/get_transaction.html'
     task_form = GetTransactionForm
 
-    # def save_verified_data(self, verified_data):
-    #     # TODO: finish & test
-    #     transaction = Transaction.objects.get(pk=1)
-    #     transaction.receipt_date = verified_data['transaction_date']
-    #     transaction.amount = verified_data['transaction_value']
-    #     transaction.payee = verified_data['transaction_donor']
-    #     transaction.save()
+    def __init__(self, **kwargs):
+        super(GetTransactionTask, self).__init__(**kwargs)
+        self.transaction_id = kwargs.get('transaction_id')
+        self.page = kwargs.get('page')
+
+    def save_verified_data(self, verified_data):
+        pass
+        # TODO: finish & test
+        # transaction = Transaction.objects.get(pk=1)
+        # transaction.receipt_date = verified_data['transaction_date']
+        # transaction.amount = verified_data['transaction_value']
+        # transaction.payee = verified_data['transaction_donor']
+        # transaction.save()
 

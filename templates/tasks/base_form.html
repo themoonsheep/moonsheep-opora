@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 <div class="container-fluid">
   <div class="row">
     <div id="presenter">
@@ -11,22 +14,21 @@
         {% csrf_token %}
         <div class="row-fluid">
           <div class="col">
-            {% for field in form %}
-              <div class="form-group">
-                <div class="col">
-                  {{ field.label }}
-                </div>
-                <div class="col">
-                  {{ field }}
-                </div>
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-        <div class="row-fluid">
-          <div class="col">
           {% block task-form %}
-{#            {% include task.task_template %}#}
+            <div class="row-fluid">
+              <div class="col">
+                {% for field in form %}
+                  <div class="form-group">
+                    <div class="col">
+                      {{ field.label }}
+                    </div>
+                    <div class="col">
+                      {{ field }}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
           {% endblock %}
           </div>
         </div>
@@ -41,3 +43,4 @@
     </div>
   </div>
 </div>
+{% endblock %}
