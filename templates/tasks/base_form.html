@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load static  %}
+
 {% block content %}
 <div class="container-fluid">
   <div class="row">
@@ -43,4 +45,8 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+  <script type="application/javascript" src="{% static "js/transcript.js" %}"></script>
 {% endblock %}

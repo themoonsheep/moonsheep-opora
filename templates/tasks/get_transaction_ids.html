@@ -1,7 +1,18 @@
+{% extends "tasks/base_form.html" %}
+
 {% block task-form %}
+<p>{{ task.transaction_type }}</p>
+<p>{{ task.money_destination }}</p>
+<p>{{ task.legal_identification }}</p>
+Find transaction ids on page {{ task.page }}
 <div class="form-group">
-  <label for="tIDs">Provide transaction IDs</label>
-  <input type="text" class="form-control" id="tIDs" aria-describedby="tIDsHelp" placeholder="Transaction IDs">
-  <small id="tIDsHelp" class="form-text text-muted">Some helper for this task.</small>
+  <label for="id_transaction_ids">Provide transaction IDs</label>
+  <input type="text" class="form-control" name="transaction_ids" id="id_transaction_ids" aria-describedby="transaction_ids_help" placeholder="Transaction IDs">
+  <small id="transaction_ids_help" class="form-text text-muted">Some helper for this task.</small>
+</div>
+<div class="form-group">
+  <label for="id_total_funds">Total funds</label>
+  <input type="text" class="form-control" name="total_funds" id="id_total_funds" aria-describedby="total_funds_help" placeholder="Enter total funds">
+  <small id="total_funds_help" class="form-text text-muted">Should be under the name, i.e. pID-921.</small>
 </div>
 {% endblock %}

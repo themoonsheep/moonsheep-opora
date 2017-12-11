@@ -138,5 +138,5 @@ MOONSHEEP_TASK_SOURCE = 'pybossa'  # 'random' / 'pybossa' -> default 'random'
 
 # if pybossa is selected
 PYBOSSA_URL = 'http://localhost:5000/'
-PYBOSSA_PROJECT_ID = 8
+PYBOSSA_PROJECT_ID = 1
 PYBOSSA_API_KEY = os.environ.get('PYBOSSA_API_KEY')

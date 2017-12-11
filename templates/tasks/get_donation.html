@@ -1,6 +1,7 @@
 {% extends "tasks/base_form.html" %}
 
 {% block task-form %}
+Find transaction with id = {{ task.transaction_id }} on page {{ task.page }}
 <div class="form-group">
   <label for="id_transaction_date">Find transaction date</label>
   <input type="date" class="form-control" name="transaction_date" id="id_transaction_date" aria-describedby="transaction_date_help" placeholder="Enter transaction date">

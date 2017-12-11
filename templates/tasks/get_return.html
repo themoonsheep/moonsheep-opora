@@ -1,0 +1,20 @@
+{% extends "tasks/base_form.html" %}
+
+{% block task-form %}
+Find transaction with id = {{ task.transaction_id }} on page {{ task.page }}
+<div class="form-group">
+  <label for="id_transaction_date">Find transaction date</label>
+  <input type="date" class="form-control" name="transaction_date" id="id_transaction_date" aria-describedby="transaction_date_help" placeholder="Enter transaction date">
+  <small id="transaction_date_help" class="form-text text-muted">Some helper for this task.</small>
+</div>
+<div class="form-group">
+  <label for="id_transaction_value">Find transaction value</label>
+  <input type="text" class="form-control" name="transaction_value" id="id_transaction_value" aria-describedby="transaction_value_help" placeholder="Enter transaction value">
+  <small id="transaction_value_help" class="form-text text-muted">Shouldn't contain currency and be divided by a dot. i.e. 4299.99</small>
+</div>
+<div class="form-group">
+  <label for="id_transaction_donor">Find transaction donor</label>
+  <input type="text" class="form-control" name="transaction_donor" id="id_transaction_donor" aria-describedby="transaction_donor_help" placeholder="Enter transaction donor">
+  <small id="transaction_donor_help" class="form-text text-muted">First name and last name</small>
+</div>
+{% endblock %}

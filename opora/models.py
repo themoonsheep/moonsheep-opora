@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.db import models
 from django.utils.translation import ugettext as _
 
@@ -7,77 +6,41 @@ class PoliticalParty(models.Model):
     """
     Political party
     """
-    name = models.CharField(verbose_name=_('name'), max_length=100)
-    legal_id = models.PositiveIntegerField(verbose_name=_('local id'))
+    name = models.CharField(verbose_name=_("name"), max_length=100)
+    legal_id = models.PositiveIntegerField(verbose_name=_("local id"))
 
     def __str__(self):
         return self.name
-
-    @property
-    def moonsheep_tasks(self):
-        return {
-            'name': {
-                'level': 1,
-                'widget': 'text'
-            },
-            'legal_id': {
-                'level': 1,
-                'widget': 'number'
-            }
-        }
 
 
 class Report(models.Model):
     """
     The whole document to transcript
     """
-    report_date = models.DateField(verbose_name=_('report date'), null=True, blank=True)
+    # initial data
+    url = models.URLField(verbose_name=_("report URL"), unique=True)
+
+    # task 1
+    date = models.DateField(verbose_name=_("report date"))
     # Party that is referred in report. This field will be copied to created Transactions
     party = models.ForeignKey(
-        to='opora.PoliticalParty', verbose_name=_('related parties'), null=True, blank=True, on_delete=models.PROTECT
+        to="opora.PoliticalParty", verbose_name=_("related parties"), on_delete=models.PROTECT
     )
+    # transactionpages_set
 
-    # pages range
-    document_page_start = models.PositiveIntegerField(
-        verbose_name=_('document first page containing table'), null=True, blank=True
-    )
-    document_page_end = models.PositiveIntegerField(
-        verbose_name=_('document last page containing table'), null=True, blank=True
-    )
-
-    finished = models.BooleanField(verbose_name=_('object completely translated'), default=False)
-
+    # task 2
     # transaction_set
 
+    finished = models.BooleanField(verbose_name=_("object completely translated"), default=False)
+
     def __str__(self):
-        return '{0}'.format(self.report_date)
+        return "{0}".format(self.date)
 
-    @property
-    def moonsheep_tasks(self):
-        return {
-            'report_date': {
-                'level': 1,
-                'widget': 'date'
-            },
-            'party': {
-                'level': 1,
-                'widget': 'Party'
-            },
-            'document_page_start': {
-                'level': 1,
-                'widget': 'number'
-            },
-            'document_page_end': {
-                'level': 1,
-                'widget': 'number'
-            }
-        }
+    class Meta:
+        unique_together = ['date', 'party']
 
 
-class Transaction(models.Model):
-    """
-    Noted transaction in documents. Filled by volunteers in 3rd stage.
-    """
+class TransactionPages(models.Model):
     CASH_CONTRIBUTION, RETURN_LAW_VIOLATION, RETURN_ERROR = range(1, 4)
     TRANSACTION_TYPES = (
         (CASH_CONTRIBUTION, _('cash contribution')),
@@ -91,77 +54,118 @@ class Transaction(models.Model):
         (ELECTION_FUND, _('election fund'))
     )
 
-    # maybe should be nullable
-    transaction_type = models.PositiveIntegerField(verbose_name=_('transaction type'), null=True, blank=True)
-    money_destination = models.PositiveIntegerField(verbose_name=_('money destination'), null=True, blank=True)
+    INDIVIDUAL, LEGAL_ENTITY = range(1, 3)
+    LEGAL_IDENTIFICATIONS = (
+        (INDIVIDUAL, _('individual')),
+        (LEGAL_ENTITY, _('legal entity'))
+    )
 
-    report = models.ForeignKey(to='opora.Report', verbose_name=_('report'), on_delete=models.PROTECT, null=True, blank=True)
+    # task 1
+    report = models.ForeignKey(to="opora.Report", verbose_name=_("report"), on_delete=models.PROTECT)
+    # pages range
+    page_start = models.PositiveIntegerField(
+        verbose_name=_("document first page containing table"), null=True, blank=True
+    )
+    page_end = models.PositiveIntegerField(
+        verbose_name=_("document last page containing table"), null=True, blank=True
+    )
 
-    # ID of transaction from table in document
-    local_id = models.CharField(verbose_name=_('our id'), max_length=10, null=True, blank=True)
+    transaction_type = models.PositiveIntegerField(
+        verbose_name=_('transaction type'), choices=TRANSACTION_TYPES
+    )
+    money_destination = models.PositiveIntegerField(
+        verbose_name=_('money destination'), choices=MONEY_DESTINATIONS
+    )
+    legal_identification = models.SmallIntegerField(
+        verbose_name=_("legal identification"), choices=LEGAL_IDENTIFICATIONS
+    )
+    # task 2
+    total_funds = models.PositiveIntegerField(verbose_name=_("total funds received"), null=True, blank=True)
+
+    def __str__(self):
+        return "{0} {1} {2}".format(
+            self.get_transaction_type_display(),
+            self.get_money_destination_display(),
+            self.get_legal_identification_display()
+        )
+
+
+class TransactionBase(models.Model):
+    """
+    Noted transaction in documents. Filled by volunteers in 3rd stage.
+    """
+    transaction_type = models.PositiveIntegerField(
+        verbose_name=_('transaction type'), choices=TransactionPages.TRANSACTION_TYPES
+    )
+    money_destination = models.PositiveIntegerField(
+        verbose_name=_('money destination'), choices=TransactionPages.MONEY_DESTINATIONS
+    )
+
+    # task 2
+    bank_document_id = models.CharField(verbose_name=_("bank document ID"), max_length=50, null=True, blank=True)
     # Page number containing table with transaction in document
-    page_number = models.PositiveIntegerField(verbose_name=_('page number containing table with transaction'), null=True, blank=True)
-    # Party that transaction concerns. Field copied from the Report.
-    party = models.ForeignKey(
-        to='opora.PoliticalParty', verbose_name=_('related parties'), null=True, blank=True, on_delete=models.PROTECT
+    page_number = models.PositiveIntegerField(
+        verbose_name=_("page number containing table with transaction"), null=True, blank=True
+    )
+    report = models.ForeignKey(
+        to="opora.Report", verbose_name=_("report"), on_delete=models.PROTECT, null=True, blank=True
     )
 
-    # Fields to be filled by volunteers
-    receipt_date = models.DateField(verbose_name=_('receipt date'), null=True, blank=True)
-    # account_type
-    # bank_document_id
+    # task 3
+    receipt_date = models.DateField(verbose_name=_("receipt date"), null=True, blank=True)
+    amount = models.PositiveIntegerField(verbose_name=_("donation amount"), null=True, blank=True)
     payee = models.ForeignKey(
-        to='opora.Payee', verbose_name=_('payee name'), null=True, blank=True, on_delete=models.PROTECT
+        to="opora.Payee", verbose_name=_("payee"), null=True, blank=True, on_delete=models.PROTECT
     )
-    amount = models.DecimalField(
-        verbose_name=_('amount'), max_digits='12', decimal_places='2', null=True, blank=True
-    )
-    total_funds_received = models.DecimalField(
-        verbose_name=_('total funds received'), max_digits='12', decimal_places='2', null=True, blank=True
+
+    class Meta:
+        abstract = True
+
+    @property
+    def party(self):
+        return self.report.party
+
+
+class Donation(TransactionBase):
+    """
+
+    """
+    # task 3
+    account_type = models.CharField(verbose_name=_("account type"), max_length=50, null=True, blank=True)
+
+    def __str__(self):
+        return "Donation {0}".format(self.pk)
+
+
+class Return(TransactionBase):
+    """
+
+    """
+    # task 3
+    date = models.DateField(verbose_name=_("return date"), null=True, blank=True)
+    document_id = models.CharField(verbose_name=_("return document id"), max_length=50, null=True, blank=True)
+    explanation = models.TextField(verbose_name=_("return explanation"), null=True, blank=True)
+    amount_to_payee = models.PositiveIntegerField(verbose_name=_("return amount to payee"), null=True, blank=True)
+    amount_to_state_budget = models.PositiveIntegerField(
+        verbose_name=_("return amount to state budget"), null=True, blank=True
     )
 
     def __str__(self):
-        if self.local_id:
-            return self.local_id
-        else:
-            return 'no local id, pk: {}'.format(self.pk)
-
-    @property
-    def moonsheep_tasks(self):
-        return {
-            'local_id': {
-                'level': 2,
-                'widget': 'number'
-            },
-            'receipt_date': {
-                'level': 3,
-                'widget': 'date'
-            },
-            'payee': {
-                'level': 3,
-                'widget': 'Payee'
-            },
-            'amount': {
-                'level': 3,
-                'widget': 'number'
-            }
-        }
+        return "Restoration {0}".format(self.pk)
 
 
 class Payee(models.Model):
     """
     Draft of payee model. Needs to be extended for legal entitees and individuals
     """
-    name = models.CharField(verbose_name=_('name'), max_length=100)
+    # task 2
+    legal_identification = models.SmallIntegerField(
+        verbose_name=_("legal identification"), choices=TransactionPages.LEGAL_IDENTIFICATIONS
+    )
+    # task 3
+    name = models.CharField(verbose_name=_("payee name (first name + last name + name of the father)"), max_length=200)
+    identification = models.CharField(verbose_name=_("payee ID or Passport number"), max_length=100)
+    address = models.CharField(verbose_name=_("payee Address"), max_length=200)
 
     def __str__(self):
         return self.name
-
-    @property
-    def moonsheep_tasks(self):
-        return {
-            'name': {
-                'level': 3,
-                'widget': 'text'
-            }
-        }

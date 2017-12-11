@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (
-    PoliticalParty, Report, Transaction, Payee
+    PoliticalParty, Report, TransactionPages, Donation, Return, Payee
 )
 
 
@@ -12,11 +12,21 @@ class PoliticalPartyAdmin(admin.ModelAdmin):
 
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
-    list_display = ['report_date', 'party', 'document_page_start']
+    list_display = ['date', 'party']
 
 
-@admin.register(Transaction)
-class TransactionAdmin(admin.ModelAdmin):
+@admin.register(TransactionPages)
+class TransactionPagesAdmin(admin.ModelAdmin):
+    list_display = ['report', 'page_start', 'page_end']
+
+
+@admin.register(Donation)
+class DonationAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Return)
+class ReturnAdmin(admin.ModelAdmin):
     pass
 
 

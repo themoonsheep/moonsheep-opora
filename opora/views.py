@@ -6,7 +6,7 @@ from moonsheep.views import TaskView
 
 
 class HomeView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'homepage.html'
 
 
 class IntroView(TemplateView):
