@@ -1,10 +1,12 @@
 import datetime
 
+from django.shortcuts import get_object_or_404
+
 from moonsheep.tasks import AbstractTask
 from moonsheep.verifiers import *
 
 from .forms import FindTableForm, GetTransactionIdsForm, GetDonationForm, GetReturnForm
-from .models import PoliticalParty, Report, TransactionBase, Donation, Return, Payee
+from .models import TransactionPages, PoliticalParty, Report, Donation, Return, Payee
 
 
 class FindTableTask(AbstractTask):
@@ -22,41 +24,50 @@ class FindTableTask(AbstractTask):
     task_template = 'tasks/find_table.html'
     task_form = FindTableForm
 
-    verify_page = EqualsVerifier
-
     def verify_party_name(self, values):
         return values[0], 1
 
     def save_verified_data(self, verified_data):
-        pass
-        # party, created = PoliticalParty.objects.get_or_create(
-        #     name=verified_data['party_name'],
-        #     legal_id=verified_data['party_legal_id']
-        # )
-        # Report.objects.get_or_create(
-        #     date=datetime.datetime.strptime(verified_data['date'], "%Y-%m-%d"),
-        #     party=party,
-        #     page_start=verified_data['page_start'],
-        #     page_end=verified_data['page_end']
-        # )
+        party, created = PoliticalParty.objects.get_or_create(
+            name=verified_data['party_name'],
+            legal_id=verified_data['party_legal_id']
+        )
+        report, created = Report.objects.get_or_create(
+            date=datetime.datetime.strptime(verified_data['date'], "%Y-%m-%d"),
+            party=party,
+            url=self.url
+        )
+        for md, tt, li in TransactionPages.iterations():
+            idx = "{0}{1}{2}".format(md, tt, li)
+            if not verified_data['no_pages_{0}'.format(idx)]:
+                TransactionPages(
+                    report=report,
+                    page_start=verified_data['page_start_{0}'.format(idx)],
+                    page_end=verified_data['page_end_{0}'.format(idx)],
+                    money_destination=md,
+                    transaction_type=tt,
+                    legal_identification=li
+                ).save()
 
     def after_save(self, verified_data):
-        pass
-        # start = verified_data['page_start']
-        # end = verified_data['page_end']
-        # for page in range(start, end + 1):
-        #     params = {
-        #         'url': self.url,
-        #         'page': page,
-        #         'transaction_type': self.transaction_type,
-        #         'money_destination': self.money_destination,
-        #         'legal_identification': self.legal_identification
-        #     }
-        #     self.create_new_task(GetTransactionIdsTask, params)
-
-    # # def get_presenter(self):
-    #     # return None
-    #     return presenter.PDFViewer()
+        party = PoliticalParty.objects.get(
+            name=verified_data['party_name'],
+            legal_id=verified_data['party_legal_id']
+        )
+        report = Report.objects.get(
+            date=datetime.datetime.strptime(verified_data['date'], "%Y-%m-%d"),
+            party=party
+        )
+        for tp in TransactionPages.objects.filter(report=report):
+            for page in range(tp.page_start, tp.page_end + 1):
+                params = {
+                    'url': self.url,
+                    'page': page,
+                    'transaction_type': tp.transaction_type,
+                    'money_destination': tp.money_destination,
+                    'legal_identification': tp.legal_identification
+                }
+                self.create_new_task(GetTransactionIdsTask, params)
 
 
 class GetTransactionIdsTask(AbstractTask):
@@ -91,16 +102,33 @@ class GetTransactionIdsTask(AbstractTask):
     # verify_ids_list = UnorderedSetVerifier('ids')  # Verifier must need to know on which field to operate
 
     def save_verified_data(self, verified_data):
+        report = get_object_or_404(Report, url=self.url)
+        # TODO: testme
+        transaction_pages = get_object_or_404(
+            TransactionPages,
+            report=report,
+            transaction_type=self.transaction_type,
+            money_destination=self.money_destination,
+            legal_identification=self.legal_identification
+        )
+        transaction_pages.total_funds = verified_data['total_funds']
+        transaction_pages.save(update_fields=['total_funds'])
         for transaction_id in verified_data['transaction_ids'].split(','):
-            if self.transaction_type == TransactionBase.CASH_CONTRIBUTION:
+            if self.transaction_type == TransactionPages.CASH_CONTRIBUTION:
                 Donation.objects.get_or_create(
+                    report=report,
                     bank_document_id=transaction_id,
-                    page=self.page
+                    page=self.page,
+                    transaction_type=self.transaction_type,
+                    money_destination=self.money_destination,
                 )
             else:
                 Return.objects.get_or_create(
+                    report=report,
                     bank_document_id=transaction_id,
-                    page=self.page
+                    page=self.page,
+                    transaction_type=self.transaction_type,
+                    money_destination=self.money_destination
                 )
 
     def after_save(self, verified_data):
@@ -113,7 +141,7 @@ class GetTransactionIdsTask(AbstractTask):
                 'money_destination': self.money_destination,
                 'legal_identification': self.legal_identification
             }
-            if self.transaction_type == TransactionBase.CASH_CONTRIBUTION:
+            if self.transaction_type == TransactionPages.CASH_CONTRIBUTION:
                 self.create_new_task(GetDonationTask, params)
             else:
                 self.create_new_task(GetReturnTask, params)
@@ -144,21 +172,29 @@ class GetDonationTask(AbstractTask):
 
     def save_verified_data(self, verified_data):
         # TODO: finish & test
-        payee = Payee.objects.get_or_create(
+        payee, created = Payee.objects.get_or_create(
+            legal_identification=self.legal_identification,
             name=verified_data['payee_name'],
             identification=verified_data['payee_identification'],
             address=verified_data['payee_address']
         )
-        transaction = Donation.objects.get(pk=self.transaction_id)
-        transaction.account_type = verified_data['account_type']
-        transaction = Donation.objects.get(pk=self.transaction_id)
+        report = Report.objects.get(
+            url=self.url
+        )
+        transaction = Donation.objects.get(
+            report=report,
+            bank_document_id=self.transaction_id,
+            transaction_type=self.transaction_type,
+            money_destination=self.money_destination,
+            page=self.page,
+        )
         transaction.account_type = verified_data['account_type']
         transaction.receipt_date = verified_data['receipt_date']
         transaction.amount = verified_data['amount']
         transaction.payee = payee
         transaction.save()
-        transaction.report.finished = True
-        transaction.report.save()
+        report.finished = True
+        report.save()
 
 
 class GetReturnTask(AbstractTask):
@@ -186,12 +222,22 @@ class GetReturnTask(AbstractTask):
 
     def save_verified_data(self, verified_data):
         # TODO: finish & test
-        payee = Payee.objects.get_or_create(
+        payee, created = Payee.objects.get_or_create(
+            legal_identification=self.legal_identification,
             name=verified_data['payee_name'],
             identification=verified_data['payee_identification'],
             address=verified_data['payee_address']
         )
-        transaction = Return.objects.get(pk=self.transaction_id)
+        report = Report.objects.get(
+            url=self.url
+        )
+        transaction = Return.objects.get(
+            report=report,
+            bank_document_id=self.transaction_id,
+            transaction_type=self.transaction_type,
+            money_destination=self.money_destination,
+            page=self.page,
+        )
         transaction.date = verified_data['date']
         transaction.document_id = verified_data['document_id']
         transaction.explanation = verified_data['explanation']
@@ -201,5 +247,5 @@ class GetReturnTask(AbstractTask):
         transaction.amount = verified_data['amount']
         transaction.payee = payee
         transaction.save()
-        transaction.report.finished = True
-        transaction.report.save()
+        report.finished = True
+        report.save()

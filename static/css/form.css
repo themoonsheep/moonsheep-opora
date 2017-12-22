@@ -1,0 +1,23 @@
+form#main { }
+form#main .ui-resizable-handle {
+    height: 16px;
+    width: 100%;
+    top: -16px;
+    background-color: #FF9600;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+}
+form#main input { border-radius: 0px; }
+form#main h1 { font-weight: bold; font-size: 30px; margin-top: 0px; }
+form#main h2 { font-weight: normal; font-size: 26px; }
+form#main h3 { font-weight: normal; font-size: 24px; margin-bottom: 30px; }
+form#main section.row { padding: 25px 0px;}
+form#main thead {border-top: 1px solid white; border-bottom: 1px solid white; background: #2C77A9; }
+form#main thead th{ border-bottom: none; padding: 12px 0px; font-weight: bold; text-align: center; font-size: 14px;  }
+form#main table.sevencols th { width: 14.2857%; }
+form#main table.elevencols th { width: 9.0909%; }
+
+form#main .sections { border-bottom: 1px solid #fff; }
+#party-details { padding-top: 70px; padding-bottom: 70px; }
+form#main ul#section-nav h3 { margin-bottom: 0px; }

@@ -1,20 +1,36 @@
 {% extends "tasks/base_form.html" %}
 
 {% block task-form %}
-Find transaction with id = {{ task.transaction_id }} on page {{ task.page }}
-<div class="form-group">
-  <label for="id_transaction_date">Find transaction date</label>
-  <input type="date" class="form-control" name="transaction_date" id="id_transaction_date" aria-describedby="transaction_date_help" placeholder="Enter transaction date">
-  <small id="transaction_date_help" class="form-text text-muted">Some helper for this task.</small>
+<h3>Scroll the document to page {{ task.page }}. Find transaction (donation) with bank ID = {{ task.transaction_id }} and rewrite it:</h3>
+
+<section class="row" id="section1-1">
+<div class="col-md-12">
+  <div class="table-wrapper">
+    <table class="table sevencols">
+      <thead>
+        <tr>
+          <th>Дата надходження внеску</th>
+          <th>Вид рахунку</th>
+          <th>Прізвище, ім’я, по батькові платника</th>
+          <th>Номер розрахункового документа</th>
+          <th>РНОКПП або серія та номер паспорта з відміткою</th>
+          <th>Місце проживання платника</th>
+          <th>Сума (грн)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="replicator">
+          <td><input type="date" class="form-control input-sm" id="id_receipt_date" name="receipt_date"></td>
+          <td><input type="text" class="form-control input-sm" id="id_account_type" name="account_type"></td>
+          <td><input type="text" class="form-control input-sm" id="id_payee_name" name="payee_name"></td>
+          <td><input type="text" class="form-control input-sm" value="{{ task.transaction_id }}" disabled></td>
+          <td><input type="text" class="form-control input-sm" id="id_payee_identification" name="payee_identification"></td>
+          <td><input type="text" class="form-control input-sm" id="id_payee_address" name="payee_address"></td>
+          <td><input type="text" class="form-control input-sm last" id="id_amount" name="amount"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-<div class="form-group">
-  <label for="id_transaction_value">Find transaction value</label>
-  <input type="text" class="form-control" name="transaction_value" id="id_transaction_value" aria-describedby="transaction_value_help" placeholder="Enter transaction value">
-  <small id="transaction_value_help" class="form-text text-muted">Shouldn't contain currency and be divided by a dot. i.e. 4299.99</small>
-</div>
-<div class="form-group">
-  <label for="id_transaction_donor">Find transaction donor</label>
-  <input type="text" class="form-control" name="transaction_donor" id="id_transaction_donor" aria-describedby="transaction_donor_help" placeholder="Enter transaction donor">
-  <small id="transaction_donor_help" class="form-text text-muted">First name and last name</small>
-</div>
+</section>
 {% endblock %}

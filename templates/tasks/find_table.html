@@ -1,229 +1,247 @@
 {% extends "tasks/base_form.html" %}
 
 {% block task-form %}
-<div class="form-inline">
-  {#<h4>Report</h4>#}
-  <div class="form-group">
-    <label for="id_date">Report date</label>
-    <input type="date" class="form-control" name="date" id="id_date" aria-describedby="date_help" placeholder="Enter report date">
-  {#  <small id="date_help" class="form-text text-muted">Some helper for this task.</small>#}
+<h3>Find the following data on the 1st page of the report:</h3>
+<div class="row">
+  <div class="col-md-4">
+    <div class="form-group">
+      <label for="id_date" class="orange">Report date</label>
+      <input type="date" class="form-control" name="date" id="id_date" aria-describedby="date_help" placeholder="Enter report date" required>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label for="id_party_name" class="orange">Party name</label>
+      <input type="text" class="form-control" name="party_name" id="id_party_name" aria-describedby="party_name_help" placeholder="Enter party name" required>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label for="id_party_legal_id" class="orange">Party legal ID</label>
+      <input type="text" class="form-control" name="party_legal_id" id="id_party_legal_id" aria-describedby="party_legal_id_help" placeholder="Enter party legal ID" required>
+    </div>
   </div>
 </div>
-<div class="form-inline">
-  {#<h4>Party</h4>#}
-  <div class="form-group">
-    <label for="id_party_name">Party name</label>
-    <input type="text" class="form-control" name="party_name" id="id_party_name" aria-describedby="party_name_help" placeholder="Enter party name">
-  {#  <small id="party_name_help" class="form-text text-muted">Some helper for this task.</small>#}
-  </div>
-</div>
-<div class="form-inline">
-  <div class="form-group">
-    <label for="id_party_legal_id">Party legal ID</label>
-    <input type="text" class="form-control" name="party_legal_id" id="id_party_legal_id" aria-describedby="party_legal_id_help" placeholder="Enter party legal ID">
-  {#  <small id="party_legal_id_help" class="form-text text-muted">Should be under the name, i.e. pID-921.</small>#}
-  </div>
-</div>
-{#<h4>Pages</h4>#}
-{#<p>#}
-{#Find pages containing information on political party transactions:#}
-{#</p>#}
-{#<p>Find table with transactions</p>#}
-<h4>1.1. Contributions by money to political party accounts</h4>
-<div class="form-group page-range">
-  <label>1) from individuals</label>
+<h3>Scroll the report to find tables containing the following informations:</h3>
+<div class="row">
+  <h4>1.1. Contributions by money to political party accounts</h4>
   <div class="form-inline">
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_start_111" id="id_page_start_111" placeholder="First page">
+    <div class="col-md-6 form-group page-range">
+      <label class="orange">1) from individuals</label>
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_start_111" id="id_page_start_111" placeholder="First page">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_end_111" id="id_page_end_111" placeholder="Last page">
+        </div>
+        <div class="form-group form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="no_pages_111" id="id_no_pages_111" value="true"> No table
+          </label>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_end_111" id="id_page_end_111" placeholder="Last page">
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" id="no_pages_111" value="true"> No table
-      </label>
+    <div class="col-md-6 form-group page-range">
+      <label class="orange">2) from legal entities</label>
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_start_112" id="id_page_start_112" placeholder="First page">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_end_112" id="id_page_end_112" placeholder="Last page">
+        </div>
+        <div class="form-group form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="no_pages_112" id="id_no_pages_112" value="option1"> No table
+          </label>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<div class="form-group page-range">
-  <label>2) from legal entities</label>
+<div class="row">
+  <h4>1.2. Information on the return and transfer to the State Budget of Ukraine funds received in violation of the law on political party accounts</h4>
   <div class="form-inline">
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_start_112" id="id_page_start_112" placeholder="First page">
+    <div class="col-md-6 form-group page-range">
+      <label class="orange">1) from individuals</label>
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_start_121" id="id_page_start_121" placeholder="First page">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_end_121" id="id_page_end_121" placeholder="Last page">
+        </div>
+        <div class="form-group form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="no_pages_121" id="id_no_pages_121" value="option1"> No table
+          </label>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_end_112" id="id_page_end_112" placeholder="Last page">
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" id="no_pages_112" value="option1"> No table
-      </label>
+    <div class="col-md-6 form-group page-range">
+      <label class="orange">2) from legal entities</label>
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_start_122" id="id_page_start_122" placeholder="First page">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_end_122" id="id_page_end_122" placeholder="Last page">
+        </div>
+        <div class="form-group form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="no_pages_122" id="id_no_pages_122" value="option1"> No table
+          </label>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<h4>1.2. Information on the return and transfer to the State Budget of Ukraine funds received in violation of the law on political party accounts</h4>
-<div class="form-group page-range">
-  <label>1) from individuals</label>
+<div class="row">
+  <h4>1.3. Information on the return and transfer to the State Budget of Ukraine funds received by political parties in error</h4>
   <div class="form-inline">
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_start_113" id="id_page_start_113" placeholder="First page">
+    <div class="col-md-6 form-group page-range">
+      <label class="orange">1) from individuals</label>
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_start_131" id="id_page_start_131" placeholder="First page">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_end_131" id="id_page_end_131" placeholder="Last page">
+        </div>
+        <div class="form-group form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="no_pages_131" id="id_no_pages_131" value="option1"> No table
+          </label>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_end_113" id="id_page_end_113" placeholder="Last page">
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" id="no_pages_113" value="option1"> No table
-      </label>
+    <div class="col-md-6 form-group page-range">
+      <label class="orange">2) from legal entities</label>
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_start_132" id="id_page_start_132" placeholder="First page">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_end_132" id="id_page_end_132" placeholder="Last page">
+        </div>
+        <div class="form-group form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="no_pages_132" id="id_no_pages_132" value="option1"> No table
+          </label>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<div class="form-group page-range">
-  <label>2) from legal entities</label>
+<div class="row">
+  <h4>1.4. Contributions by money to the accounts of the election fund of a political party</h4>
   <div class="form-inline">
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_start_121" id="id_page_start_121" placeholder="First page">
+    <div class="col-md-6 form-group page-range">
+      <label class="orange">1) from individuals</label>
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_start_211" id="id_page_start_211" placeholder="First page">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_end_211" id="id_page_end_211" placeholder="Last page">
+        </div>
+        <div class="form-group form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="no_pages_211" id="id_no_pages_211" value="option1"> No table
+          </label>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_end_121" id="id_page_end_121" placeholder="Last page">
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" id="no_pages_121" value="option1"> No table
-      </label>
+    <div class="col-md-6 form-group page-range">
+      <label class="orange">2) from legal entities</label>
+      <div class="form-inline page-range">
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_start_212" id="id_page_start_212" placeholder="First page">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_end_212" id="id_page_end_212" placeholder="Last page">
+        </div>
+        <div class="form-group form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="no_pages_212" id="id_no_pages_212" value="option1"> No table
+          </label>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<h4>1.3. Information on the return and transfer to the State Budget of Ukraine funds received by political parties in error</h4>
-<div class="form-group page-range">
-  <label>1) from individuals</label>
+<div class="row">
+  <h4>1.5. Information about the return and transfer to the State Budget of Ukraine of cash received in violation of the legislation requirements on the accounts of the election fund</h4>
   <div class="form-inline">
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_start_122" id="id_page_start_122" placeholder="First page">
+    <div class="col-md-6 form-group page-range">
+      <label class="orange">1) from individuals</label>
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_start_221" id="id_page_start_221" placeholder="First page">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_end_221" id="id_page_end_221" placeholder="Last page">
+        </div>
+        <div class="form-group form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="no_pages_221" id="id_no_pages_221" value="option1"> No table
+          </label>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_end_122" id="id_page_end_122" placeholder="Last page">
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" id="no_pages_122" value="option1"> No table
-      </label>
+    <div class="col-md-6 form-group page-range">
+      <label class="orange">2) from legal entities</label>
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_start_222" id="id_page_start_222" placeholder="First page">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_end_222" id="id_page_end_222" placeholder="Last page">
+        </div>
+        <div class="form-group form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="no_pages_222" id="id_no_pages_222" value="option1"> No table
+          </label>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<div class="form-group page-range">
-  <label>2) from legal entities</label>
+<div class="row">
+  <h4>1.6. Information about the return and transfer to the State Budget of Ukraine of cash received by mistake on the accounts of the election fund</h4>
   <div class="form-inline">
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_start_123" id="id_page_start_123" placeholder="First page">
+    <div class="col-md-6 form-group page-range">
+      <label class="orange">1) from individuals</label>
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_start_231" id="id_page_start_231" placeholder="First page">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_end_231" id="id_page_end_231" placeholder="Last page">
+        </div>
+        <div class="form-group form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="no_pages_231" id="id_no_pages_231" value="option1"> No table
+          </label>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_end_123" id="id_page_end_123" placeholder="Last page">
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" id="no_pages_123" value="option1"> No table
-      </label>
-    </div>
-  </div>
-</div>
-<h4>1.4. Contributions by money to the accounts of the election fund of a political party</h4>
-<div class="form-group page-range">
-  <label>1) from individuals</label>
-  <div class="form-inline">
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_start_211" id="id_page_start_211" placeholder="First page">
-    </div>
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_end_211" id="id_page_end_211" placeholder="Last page">
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" id="no_pages_211" value="option1"> No table
-      </label>
-    </div>
-  </div>
-</div>
-<div class="form-group">
-  <label>2) from legal entities</label>
-  <div class="form-inline page-range">
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_start_212" id="id_page_start_212" placeholder="First page">
-    </div>
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_end_212" id="id_page_end_212" placeholder="Last page">
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" id="no_pages_212" value="option1"> No table
-      </label>
-    </div>
-  </div>
-</div>
-<h4>1.5. Information about the return and transfer to the State Budget of Ukraine of cash received in violation of the legislation requirements on the accounts of the election fund</h4>
-<div class="form-group page-range">
-  <label>1) from individuals</label>
-  <div class="form-inline">
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_start_213" id="id_page_start_213" placeholder="First page">
-    </div>
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_end_213" id="id_page_end_213" placeholder="Last page">
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" id="no_pages_213" value="option1"> No table
-      </label>
-    </div>
-  </div>
-</div>
-<div class="form-group page-range">
-  <label>2) from legal entities</label>
-  <div class="form-inline">
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_start_221" id="id_page_start_221" placeholder="First page">
-    </div>
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_end_221" id="id_page_end_221" placeholder="Last page">
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" id="no_pages_221" value="option1"> No table
-      </label>
-    </div>
-  </div>
-</div>
-<h4>1.6. Information about the return and transfer to the State Budget of Ukraine of cash received by mistake on the accounts of the election fund</h4>
-<div class="form-group page-range">
-  <label>1) from individuals</label>
-  <div class="form-inline">
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_start_222" id="id_page_start_222" placeholder="First page">
-    </div>
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_end_222" id="id_page_end_222" placeholder="Last page">
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" id="no_pages_222" value="option1"> No table
-      </label>
-    </div>
-  </div>
-</div>
-<div class="form-group page-range">
-  <label>2) from legal entities</label>
-  <div class="form-inline">
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_start_223" id="id_page_start_223" placeholder="First page">
-    </div>
-    <div class="form-group">
-      <input type="number" class="form-control" name="page_end_223" id="id_page_end_223" placeholder="Last page">
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" id="no_pages_223" value="option1"> No table
-      </label>
+    <div class="col-md-6 form-group page-range">
+      <label class="orange">2) from legal entities</label>
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_start_232" id="id_page_start_232" placeholder="First page">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" name="page_end_232" id="id_page_end_232" placeholder="Last page">
+        </div>
+        <div class="form-group form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="no_pages_232" id="id_no_pages_232" value="option1"> No table
+          </label>
+        </div>
+      </div>
     </div>
   </div>
 </div>

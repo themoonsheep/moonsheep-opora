@@ -17,17 +17,31 @@ class ReportAdmin(admin.ModelAdmin):
 
 @admin.register(TransactionPages)
 class TransactionPagesAdmin(admin.ModelAdmin):
-    list_display = ['report', 'page_start', 'page_end']
+    list_display = [
+        'report', 'page_start', 'page_end',
+        'total_funds',
+        'money_destination', 'transaction_type', 'legal_identification'
+    ]
 
 
 @admin.register(Donation)
 class DonationAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+        'money_destination', 'transaction_type',
+        'bank_document_id', 'page', 'report',
+        'receipt_date', 'amount', 'payee', 'account_type'
+    ]
 
 
 @admin.register(Return)
 class ReturnAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+        'money_destination', 'transaction_type',
+        'bank_document_id', 'page', 'report',
+        'receipt_date', 'amount', 'payee',
+        'date', 'document_id', 'explanation',
+        'amount_to_payee', 'amount_to_state_budget'
+    ]
 
 
 @admin.register(Payee)

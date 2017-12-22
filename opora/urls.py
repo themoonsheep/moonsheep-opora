@@ -15,19 +15,33 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.views.generic import TemplateView
 
-from .tasks import *
-from .views import (
-    HomeView, IntroView, TranscriptionView, MissionView
+from .api import (
+    ReportList, ReportDetail, PoliticalPartyList, PoliticalPartyDetail,
+    ReturnList, ReturnDetail, DonationList, DonationDetail
 )
+from .tasks import *
+from .views import TranscriptionView
 
+
+api_urlpatterns = [
+    url(r'^report/$', ReportList.as_view(), name='report-list'),
+    url(r'^report/(?P<pk>\d+)/$', ReportDetail.as_view(), name='report-detail'),
+    url(r'^political-party/$', PoliticalPartyList.as_view(), name='political-party-list'),
+    url(r'^political-party/(?P<pk>\d+)/$', PoliticalPartyDetail.as_view(), name='political-party-detail'),
+    url(r'^return/$', ReturnList.as_view(), name='return-list'),
+    url(r'^return/(?P<pk>\d+)/$', ReturnDetail.as_view(), name='return-detail'),
+    url(r'^donation/$', DonationList.as_view(), name='donation-list'),
+    url(r'^donation/(?P<pk>\d+)/$', DonationDetail.as_view(), name='donation-detail'),
+]
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^moonsheep/', include('moonsheep.urls')),
 
-    url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^intro/$', IntroView.as_view(), name='intro'),
+    url(r'^$', TemplateView.as_view(template_name='homepage.html'), name='home'),
+    url(r'^api/', include(api_urlpatterns)),
     url(r'^transcription/$', TranscriptionView.as_view(), name='transcription'),
-    url(r'^mission/$', MissionView.as_view(), name='mission'),
+    url(r'^thank-you/$', TemplateView.as_view(template_name='thankyou.html'), name='thank-you'),
 ]

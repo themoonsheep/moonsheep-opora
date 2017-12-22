@@ -1,0 +1,66 @@
+
+  .overlay {
+    background-color: #2673a8;
+    color: #fff;
+    position: fixed !important;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: calc(45% + 56px);    
+    opacity: 0.7;
+    z-index: 99999;
+    padding: 0px;
+  }
+
+  .overlay:hover { opacity: 1; }
+  .overlay a { color: #ffc800; }
+  .overlay ul { margin-left: 20px; }
+  .overlay div.form { max-height: 100%; overflow-y: scroll; background-color: #2673a8; }
+  .overlay td, .overlay tr { border: none !important; }
+  .overlay th { border-bottom: 1px solid #fff;  }
+  .overlay h3 { padding-top: 10px;  }
+
+  #section-nav { margin: 0px; padding: 0px; list-style: none; }
+  #section-nav li { float: left; clear: none; text-align: center; width: 11.1111%; padding: 15px 0px; font-size: 18px; }
+  #section-nav li h3 { margin: 0px; padding: 0px; font-size: 18px; }
+
+  .panel-top {
+    flex: 0 0 auto;
+    /* only manually resize */
+    padding: 10px;
+    height: 60%;
+    width: 100%;
+    white-space: nowrap;
+    background: transparent;
+    color: white;
+  }
+
+  .splitter-horizontal {
+    flex: 0 0 auto;
+    height: 18px;
+    background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/hsizegrip.png) center center no-repeat #535353;
+    cursor: row-resize;
+  }
+
+  .panel-bottom {
+    flex: 1 1 auto;
+    /* resizable */
+    padding: 10px;
+    min-height: 40%;
+    background: #eee;
+  }
+
+  table {
+      border: 0;
+      padding: 0;
+      margin: 0 0 20px 0;
+      border-collapse: collapse;
+  }
+  th {
+      padding: 5px;
+      /* NOTE: th padding must be set explicitly in order to support IE */
+  }
+  tbody td {
+      padding: 10px;
+      line-height: 18px;
+  }

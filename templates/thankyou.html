@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <section class="row blue-back">
+    <div class="col-md-6 col-md-offset-3">
+      <h1 class="fff">Де захована проблема?</h1>
+      <p class="fff">Ви щойно “звільнили” дані з одного зі звітів політичної партії. Введені
+дані будуть додані до бази після верифікації. Ви можете продовжити
+роботу та “звільнити” ще один документ. Також ви можете звантажити
+ті дані, які вже верифіковані.</p>
+    </div>
+
+  </section>
+  <section class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="main-percentage row">
+        <div class="col-md-2 number">23%</div>
+        <div class="col-md-10">
+          <div class=" prog-bar">
+            <div class="prog-bar-fill" style="width: 23%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="separator"></div>
+      <div class="col-md-4 col-md-offset-2"><a href="" class="button pull-right">ЗВІЛЬНИТИ ДАНІ</a></div>
+      <div class="col-md-4 col-md-offset-1"><a href="" class="button orange-button">ЗВАНТАЖИТИ ДАНІ</a></div>
+    </div>
+  </section>
+
+
+  <section class="row in-shade">
+    <div class="col-md-6 col-md-offset-3">
+      <h2 class="blue">Що далі</h2>
+      <p class="blue">Якщо ви помітили що-небудь цікаве, заповніть будь ласка форму. Також просимо заповнити форму, якщо хочете повідомити щось нам про функціонал інструменту.</p>
+      <textarea class="big-blue" rows="12" name="feedback" id="feedback"></textarea>
+      <a href="" class="button">НАДІСЛАТИ</a>
+      <div class="separator"></div>
+    </div>
+  </section>
+
+  {% include "footer.html" %}
+</div>
+{% endblock %}

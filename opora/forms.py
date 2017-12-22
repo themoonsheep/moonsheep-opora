@@ -1,46 +1,48 @@
 from django import forms
 
+from .models import TransactionPages
+
 
 class FindTableForm(forms.Form):
     party_name = forms.CharField(label="Party name")
     party_legal_id = forms.CharField(label="Party legal ID")
     date = forms.CharField(label="Report date", widget=forms.SelectDateWidget)
-    page_start_111 = forms.IntegerField(label="First page number")
-    page_end_111 = forms.IntegerField(label="Last page number")
-    no_pages_111 = forms.BooleanField(label="No pages")
-    page_start_112 = forms.IntegerField(label="First page number")
-    page_end_112 = forms.IntegerField(label="Last page number")
-    no_pages_112 = forms.BooleanField(label="No pages")
-    page_start_113 = forms.IntegerField(label="First page number")
-    page_end_113 = forms.IntegerField(label="Last page number")
-    no_pages_113 = forms.BooleanField(label="No pages")
-    page_start_121 = forms.IntegerField(label="First page number")
-    page_end_121 = forms.IntegerField(label="Last page number")
-    no_pages_121 = forms.BooleanField(label="No pages")
-    page_start_122 = forms.IntegerField(label="First page number")
-    page_end_122 = forms.IntegerField(label="Last page number")
-    no_pages_122 = forms.BooleanField(label="No pages")
-    page_start_123 = forms.IntegerField(label="First page number")
-    page_end_123 = forms.IntegerField(label="Last page number")
-    no_pages_123 = forms.BooleanField(label="No pages")
-    page_start_211 = forms.IntegerField(label="First page number")
-    page_end_211 = forms.IntegerField(label="Last page number")
-    no_pages_211 = forms.BooleanField(label="No pages")
-    page_start_212 = forms.IntegerField(label="First page number")
-    page_end_212 = forms.IntegerField(label="Last page number")
-    no_pages_212 = forms.BooleanField(label="No pages")
-    page_start_213 = forms.IntegerField(label="First page number")
-    page_end_213 = forms.IntegerField(label="Last page number")
-    no_pages_213 = forms.BooleanField(label="No pages")
-    page_start_221 = forms.IntegerField(label="First page number")
-    page_end_221 = forms.IntegerField(label="Last page number")
-    no_page_221 = forms.BooleanField(label="No pages")
-    page_start_222 = forms.IntegerField(label="First page number")
-    page_end_222 = forms.IntegerField(label="Last page number")
-    no_pages_222 = forms.BooleanField(label="No pages")
-    page_start_223 = forms.IntegerField(label="First page number")
-    page_end_223 = forms.IntegerField(label="Last page number")
-    no_pages_223 = forms.BooleanField(label="No pages")
+
+    def __init__(self, *args, **kwargs):
+        super(FindTableForm, self).__init__(*args, **kwargs)
+        for md, tt, li in TransactionPages.iterations():
+            idx = '{0}{1}{2}'.format(md, tt, li)
+            self.fields['no_pages_{0}'.format(idx)] = \
+                forms.BooleanField(label="No pages", required=False)
+            self.fields['page_start_{0}'.format(idx)] = \
+                forms.IntegerField(label="First page number", required=False)
+            self.fields['page_end_{0}'.format(idx)] = \
+                forms.IntegerField(label="Last page number", required=False)
+
+    def clean(self):
+        cleaned_data = super(FindTableForm, self).clean()
+
+        for md, tt, li in TransactionPages.iterations():
+            idx = '{0}{1}{2}'.format(md, tt, li)
+            page_start = cleaned_data.get("page_start_{0}".format(idx))
+            page_end = cleaned_data.get("page_end_{0}".format(idx))
+            no_pages = cleaned_data.get("no_pages_{0}".format(idx))
+            if bool(page_start and page_end) == bool(no_pages):
+                if bool(page_start and page_end):
+                    message = "Don't provide no pages and page start and page end for form {0}.".format(idx)
+                else:
+                    message = "Provide no pages or provide page start and page end for form {0}.".format(idx)
+                raise forms.ValidationError(message)
+            elif bool(page_start) != bool(page_end):
+                if bool(page_start):
+                    message = "Provide page end for form {0}.".format(idx)
+                else:
+                    message = "Provide page start for form {0}.".format(idx)
+                raise forms.ValidationError(message)
+            if bool(page_start and page_end) and page_end < page_start:
+                raise forms.ValidationError("Last page must be greater or equal than first page.")
+
+        return cleaned_data
 
 
 class GetTransactionIdsForm(forms.Form):
