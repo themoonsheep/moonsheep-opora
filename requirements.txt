@@ -1,7 +1,8 @@
 --index-url https://pypi.python.org/simple/
 
 django~=2.0
-git+https://github.com/TransparenCEE/moonsheep#egg=django-moonsheep
+git+https://github.com/TransparenCEE/pybossa-client.git#egg=pybossa-client>=2.0.2
+git+https://github.com/TransparenCEE/moonsheep#egg=django-moonsheep>=0.2.0
 
 # REST
 djangorestframework
