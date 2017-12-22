@@ -5,7 +5,7 @@
 
 {% block content %}
 <div id="task">
-  {% block task-fill Procfile%}
+  {% block task-fill %}
   <form id="taskForm" action="#" method="post">
     {% csrf_token %}
     {% moonsheep_token task %}
