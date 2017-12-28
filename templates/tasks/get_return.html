@@ -9,32 +9,109 @@
     <table class="table sevencols">
       <thead>
         <tr>
-          <th>Дата надходження внеску</th>
-          <th>Загальна сума коштів</th>
-          <th>Номер розрахункового документа</th>
-          <th>Прізвище, ім’я, по батькові особи, від якої отримано кошти</th>
-          <th>РНОКПП або серія та номер паспорта з відміткою </th>
-          <th>Місце проживання особи</th>
-          <th>Дата повер-нення</th>
-          <th>Номер розрахунково-го документа</th>
-          <th>Обґрунтува-ння повернення</th>
-          <th>Сума повернення (грн)</th>
-          <th>Сума, яка перераховуєть-ся до бюджету (грн)</th>
+          <th class="form-group{% if form.errors.receipt_date %} has-error{% endif %}">
+            <label class="control-label" for="id_receipt_date">
+                Дата надходження внеску
+            </label>
+          </th>
+          <th class="form-group{% if form.errors.amount %} has-error{% endif %}">
+            <label class="control-label" for="id_amount">
+              Загальна сума коштів
+            </label>
+          </th>
+          <th class="form-group{% if form.errors.transaction_id %} has-error{% endif %}">
+            <label class="control-label" for="id_transaction_id">
+              Номер розрахункового документа
+            </label>
+          </th>
+          <th class="form-group{% if form.errors.payee_name %} has-error{% endif %}">
+            <label class="control-label" for="id_payee_name">
+              Прізвище, ім’я, по батькові особи, від якої отримано кошти
+            </label>
+          </th>
+          <th class="form-group{% if form.errors.payee_identification %} has-error{% endif %}">
+            <label class="control-label" for="id_payee_identification">
+              РНОКПП або серія та номер паспорта з відміткою
+            </label>
+          </th>
+          <th class="form-group{% if form.errors.payee_address %} has-error{% endif %}">
+            <label class="control-label" for="id_payee_address">
+              Місце проживання особи
+            </label>
+          </th>
+          <th class="form-group{% if form.errors.date %} has-error{% endif %}">
+            <label class="control-label" for="id_date">
+              Дата повер-нення
+            </label>
+          </th>
+          <th class="form-group{% if form.errors.document_id %} has-error{% endif %}">
+            <label class="control-label" for="id_document_id">
+              Номер розрахунково-го документа
+            </label>
+          </th>
+          <th class="form-group{% if form.errors.explanation %} has-error{% endif %}">
+            <label class="control-label" for="id_explanation">
+              Обґрунтува-ння повернення
+            </label>
+          </th>
+          <th class="form-group{% if form.errors.amount_to_payee %} has-error{% endif %}">
+            <label class="control-label" for="id_amount_to_payee">
+              Сума повернення (грн)
+            </label>
+          </th>
+          <th class="form-group{% if form.errors.amount_to_state_budget %} has-error{% endif %}">
+            <label class="control-label" for="id_document_id">
+              Сума, яка перераховуєть-ся до бюджету (грн)
+            </label>
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr class="replicator">
-          <td><input type="date" class="form-control input-sm" id="id_receipt_date" name="receipt_date"></td>
-          <td><input type="text" class="form-control input-sm" id="id_amount" name="amount"></td>
-          <td><input type="text" class="form-control input-sm" value="{{ task.transaction_id }}" disabled></td>
-          <td><input type="text" class="form-control input-sm" id="id_payee_name" name="payee_name"></td>
-          <td><input type="text" class="form-control input-sm" id="id_payee_identification" name="payee_identification"></td>
-          <td><input type="text" class="form-control input-sm" id="id_payee_address" name="payee_address"></td>
-          <td><input type="date" class="form-control input-sm" id="id_date" name="date"></td>
-          <td><input type="text" class="form-control input-sm" id="id_document_id" name="document_id"></td>
-          <td><input type="text" class="form-control input-sm" id="id_explanation" name="explanation"></td>
-          <td><input type="text" class="form-control input-sm" id="id_amount_to_payee" name="amount_to_payee"></td>
-          <td><input type="text" class="form-control input-sm last" id="id_amount_to_state_budget" name="amount_to_state_budget"></td>
+          <td class="form-group{% if form.errors.receipt_date %} has-error{% endif %}">
+            <input type="date" class="form-control input-sm" id="id_receipt_date" name="receipt_date" />
+            {% if form.errors.receipt_date %}<span class="help-block">{{ form.errors.receipt_date }}</span>{% endif %}
+          </td>
+          <td class="form-group{% if form.errors.amount %} has-error{% endif %}">
+            <input type="text" class="form-control input-sm" id="id_amount" name="amount" />
+            {% if form.errors.amount %}<span class="help-block">{{ form.errors.amount }}</span>{% endif %}
+          </td>
+          <td class="form-group{% if form.errors.transaction_id %} has-error{% endif %}">
+            <input type="text" class="form-control input-sm" id="id_transaction_id" value="{{ task.transaction_id }}" disabled />
+            {% if form.errors.transaction_id %}<span class="help-block">{{ form.errors.transaction_id }}</span>{% endif %}
+          </td>
+          <td class="form-group{% if form.errors.payee_name %} has-error{% endif %}">
+            <input type="text" class="form-control input-sm" id="id_payee_name" name="payee_name" />
+            {% if form.errors.payee_name %}<span class="help-block">{{ form.errors.payee_name }}</span>{% endif %}
+          </td>
+          <td class="form-group{% if form.errors.payee_identification %} has-error{% endif %}">
+            <input type="text" class="form-control input-sm" id="id_payee_identification" name="payee_identification" />
+            {% if form.errors.payee_identification %}<span class="help-block">{{ form.errors.payee_identification }}</span>{% endif %}
+          </td>
+          <td class="form-group{% if form.errors.payee_address %} has-error{% endif %}">
+            <input type="text" class="form-control input-sm" id="id_payee_address" name="payee_address" />
+            {% if form.errors.payee_address %}<span class="help-block">{{ form.errors.payee_address }}</span>{% endif %}
+          </td>
+          <td class="form-group{% if form.errors.date %} has-error{% endif %}">
+            <input type="date" class="form-control input-sm" id="id_date" name="date" />
+            {% if form.errors.date %}<span class="help-block">{{ form.errors.date }}</span>{% endif %}
+          </td>
+          <td class="form-group{% if form.errors.document_id %} has-error{% endif %}">
+            <input type="text" class="form-control input-sm" id="id_document_id" name="document_id" />
+            {% if form.errors.total_funds %}<span class="help-block">{{ form.errors.total_funds }}</span>{% endif %}
+          </td>
+          <td class="form-group{% if form.errors.explanation %} has-error{% endif %}">
+            <input type="text" class="form-control input-sm" id="id_explanation" name="explanation" />
+            {% if form.errors.explanation %}<span class="help-block">{{ form.errors.explanation }}</span>{% endif %}
+          </td>
+          <td class="form-group{% if form.errors.amount_to_payee %} has-error{% endif %}">
+            <input type="text" class="form-control input-sm" id="id_amount_to_payee" name="amount_to_payee" />
+            {% if form.errors.amount_to_payee %}<span class="help-block">{{ form.errors.amount_to_payee }}</span>{% endif %}
+          </td>
+          <td class="form-group{% if form.errors.amount_to_state_budget %} has-error{% endif %}">
+            <input type="text" class="form-control input-sm last" id="id_amount_to_state_budget" name="amount_to_state_budget" />
+            {% if form.errors.amount_to_state_budget %}<span class="help-block">{{ form.errors.amount_to_state_budget }}</span>{% endif %}
+          </td>
         </tr>
       </tbody>
     </table>

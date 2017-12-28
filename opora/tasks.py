@@ -113,7 +113,7 @@ class GetTransactionIdsTask(AbstractTask):
         )
         transaction_pages.total_funds = verified_data['total_funds']
         transaction_pages.save(update_fields=['total_funds'])
-        for transaction_id in verified_data['transaction_ids'].split(','):
+        for transaction_id in verified_data['transaction_ids']:
             if self.transaction_type == TransactionPages.CASH_CONTRIBUTION:
                 Donation.objects.get_or_create(
                     report=report,
@@ -132,7 +132,7 @@ class GetTransactionIdsTask(AbstractTask):
                 )
 
     def after_save(self, verified_data):
-        for transaction_id in verified_data['transaction_ids'].split(','):
+        for transaction_id in verified_data['transaction_ids']:
             params = {
                 'url': self.url,
                 'transaction_id': transaction_id,

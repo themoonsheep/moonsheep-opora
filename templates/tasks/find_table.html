@@ -1,24 +1,29 @@
 {% extends "tasks/base_form.html" %}
 
+{% load static %}
+
 {% block task-form %}
 <h3>Find the following data on the 1st page of the report:</h3>
 <div class="row">
   <div class="col-md-4">
-    <div class="form-group">
+    <div class="form-group{% if form.errors.date %} has-error{% endif %}">
       <label for="id_date" class="orange">Report date</label>
       <input type="date" class="form-control" name="date" id="id_date" aria-describedby="date_help" placeholder="Enter report date" required>
+      {% if form.errors.date %}<span class="help-block">{{ form.errors.date }}</span>{% endif %}
     </div>
   </div>
   <div class="col-md-4">
-    <div class="form-group">
+    <div class="form-group{% if form.errors.party_name %} has-error{% endif %}">
       <label for="id_party_name" class="orange">Party name</label>
       <input type="text" class="form-control" name="party_name" id="id_party_name" aria-describedby="party_name_help" placeholder="Enter party name" required>
+      {% if form.errors.party_name %}<span class="help-block">{{ form.errors.party_name }}</span>{% endif %}
     </div>
   </div>
   <div class="col-md-4">
-    <div class="form-group">
+    <div class="form-group{% if form.errors.party_legal_id %} has-error{% endif %}">
       <label for="id_party_legal_id" class="orange">Party legal ID</label>
       <input type="text" class="form-control" name="party_legal_id" id="id_party_legal_id" aria-describedby="party_legal_id_help" placeholder="Enter party legal ID" required>
+      {% if form.errors.party_legal_id %}<span class="help-block">{{ form.errors.party_legal_id }}</span>{% endif %}
     </div>
   </div>
 </div>
@@ -246,3 +251,7 @@
   </div>
 </div>
 {% endblock %}
+
+{#{% block scripts %}#}
+{#  <script src="{% static "js/api/find_table.js" %}"></script>#}
+{#{% endblock %}#}

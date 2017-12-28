@@ -6,6 +6,13 @@
 {% block content %}
 <div id="task">
   {% block task-fill %}
+    {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+          <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+          </div>
+      {% endfor %}
+    {% endif %}
   <form id="taskForm" action="#" method="post">
     {% csrf_token %}
     {% moonsheep_token task %}
@@ -15,14 +22,14 @@
       {% endblock %}
       </div>
     </div>
-    <div class="row-fluid">
-      <div class="col-md-3 col-md-offset-3 text-center">
+{#    <div class="row-fluid">#}
+{#      <div class="col-md-3 col-md-offset-3 text-center">#}
         <button type="submit" class="button large-button">уявити</button>
-      </div>
-      <div class="col-md-3 text-center">
-        <button type="submit" class="button">уявити</button>
-      </div>
-    </div>
+{#      </div>#}
+{#      <div class="col-md-3 text-center">#}
+{#        <button type="submit" class="button">уявити</button>#}
+{#      </div>#}
+{#    </div>#}
   </form>
   {% endblock %}
 </div>

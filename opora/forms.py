@@ -1,6 +1,13 @@
 from django import forms
 
+from moonsheep.forms import MultipleRangeField
+
 from .models import TransactionPages
+
+
+class NewTaskForm(forms.Form):
+    url = forms.URLField(label="Report URL")
+    # task_class = forms.CharField()
 
 
 class FindTableForm(forms.Form):
@@ -46,7 +53,7 @@ class FindTableForm(forms.Form):
 
 
 class GetTransactionIdsForm(forms.Form):
-    transaction_ids = forms.CharField(label="Transaction IDs")
+    transaction_ids = MultipleRangeField(label="Transaction IDs")
     total_funds = forms.IntegerField(label="Total received funds")
 
 
