@@ -1,4 +1,5 @@
 import datetime
+import random
 
 from django.shortcuts import get_object_or_404
 
@@ -23,6 +24,13 @@ class FindTableTask(AbstractTask):
     """
     task_template = 'tasks/find_table.html'
     task_form = FindTableForm
+
+    def create_mocked_task(self, data):
+        data['info'].update({
+            'url': 'https://nazk.gov.ua/sites/default/files/docs/2017/3/3_kv/2/Agrarna_partija/3%20%EA%E2%E0%F0%F2%E0%EB%202017%20%D6%C0%20%C0%CF%D3%20%97%20%E7%E0%F2%E5%F0%F2%E8%E9.pdf',
+        })
+
+        return data
 
     def verify_party_name(self, values):
         return values[0], 1
@@ -85,6 +93,26 @@ class GetTransactionIdsTask(AbstractTask):
     """
     task_template = 'tasks/get_transaction_ids.html'
     task_form = GetTransactionIdsForm
+
+    def create_mocked_task(self, data):
+        data['info'].update(random.choice([
+            {
+                'url': 'https://nazk.gov.ua/sites/default/files/docs/2017/3/3_kv/2/Agrarna_partija/3%20%EA%E2%E0%F0%F2%E0%EB%202017%20%D6%C0%20%C0%CF%D3%20%97%20%E7%E0%F2%E5%F0%F2%E8%E9.pdf',
+                'page': 46,
+                'money_destination': TransactionPages.POLITICAL_PARTY_ACCOUNT,
+                'transaction_type': TransactionPages.CASH_CONTRIBUTION,
+                'legal_identification': TransactionPages.INDIVIDUAL,
+            },
+            {
+                'url': 'https://nazk.gov.ua/sites/default/files/docs/2017/3/3_kv/2/Agrarna_partija/3%20%EA%E2%E0%F0%F2%E0%EB%202017%20%D6%C0%20%C0%CF%D3%20%97%20%E7%E0%F2%E5%F0%F2%E8%E9.pdf',
+                'page': 74,
+                'money_destination': TransactionPages.POLITICAL_PARTY_ACCOUNT,
+                'transaction_type': TransactionPages.CASH_CONTRIBUTION,
+                'legal_identification': TransactionPages.LEGAL_ENTITY,
+            }
+        ]))
+
+        return data
 
     def __init__(self, **kwargs):
         super(GetTransactionIdsTask, self).__init__(**kwargs)
@@ -152,6 +180,28 @@ class GetDonationTask(AbstractTask):
     """
     task_template = 'tasks/get_donation.html'
     task_form = GetDonationForm
+
+    def create_mocked_task(self, data):
+        data['info'].update(random.choice([
+            {
+                'url': 'https://nazk.gov.ua/sites/default/files/docs/2017/3/3_kv/2/Agrarna_partija/3%20%EA%E2%E0%F0%F2%E0%EB%202017%20%D6%C0%20%C0%CF%D3%20%97%20%E7%E0%F2%E5%F0%F2%E8%E9.pdf',
+                'page': 46,
+                'transaction_id': random.choice(['@2PL293649', '@2PL293627', '@2PL270721', '5820345SB', '5820344SB', '5820343SB', '5820342SB', '5820341SB', '5820340SB', '5820339SB', '5820328SB', '5820337SB', '5820336SB']),
+                'money_destination': TransactionPages.POLITICAL_PARTY_ACCOUNT,
+                'transaction_type': TransactionPages.CASH_CONTRIBUTION,
+                'legal_identification': TransactionPages.INDIVIDUAL,
+            },
+            {
+                'url': 'https://nazk.gov.ua/sites/default/files/docs/2017/3/3_kv/2/Agrarna_partija/3%20%EA%E2%E0%F0%F2%E0%EB%202017%20%D6%C0%20%C0%CF%D3%20%97%20%E7%E0%F2%E5%F0%F2%E8%E9.pdf',
+                'page': 74,
+                'transaction_id': random.choice([353, 20, 203, 257, 754, 12404, 16]),
+                'money_destination': TransactionPages.POLITICAL_PARTY_ACCOUNT,
+                'transaction_type': TransactionPages.CASH_CONTRIBUTION,
+                'legal_identification': TransactionPages.LEGAL_ENTITY,
+            }
+        ]))
+
+        return data
 
     def __init__(self, **kwargs):
         super(GetDonationTask, self).__init__(**kwargs)

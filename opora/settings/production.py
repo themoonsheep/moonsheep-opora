@@ -4,13 +4,15 @@ import dj_database_url
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'moonsheep-opora.herokuapp.com',
+#    'moonsheep-opora.herokuapp.com',
+    '*'
 ]
 
 DATABASES = {'default': dj_database_url.config()}
 
 # moonsheep settings
-MOONSHEEP_TASK_SOURCE = 'pybossa'
+MOONSHEEP_TASK_SOURCE = 'random'
+MOONSHEEP_DEVELOPMENT_MODE = True
 
 # if pybossa is selected
 PYBOSSA_URL = 'https://crowdcrafting.org/'

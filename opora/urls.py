@@ -23,7 +23,7 @@ from .api import (
 )
 from .tasks import *
 from .views import TranscriptionView, NewTaskFormView
-
+from .tasks import *# Keep it to make Moonsheep aware of defined tasks
 
 api_urlpatterns = [
     url(r'^report/$', ReportList.as_view(), name='report-list'),
