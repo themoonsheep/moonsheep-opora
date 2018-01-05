@@ -125,7 +125,9 @@ class TransactionBase(models.Model):
 
     # task 3
     receipt_date = models.DateField(verbose_name=_("receipt date"), null=True, blank=True)
-    amount = models.PositiveIntegerField(verbose_name=_("donation amount"), null=True, blank=True)
+    amount = models.DecimalField(
+        verbose_name=_("donation amount"), null=True, blank=True, decimal_places=2, max_digits=10
+    )
     payee = models.ForeignKey(
         to="opora.Payee", verbose_name=_("payee"), null=True, blank=True, on_delete=models.PROTECT
     )
@@ -157,9 +159,11 @@ class Return(TransactionBase):
     date = models.DateField(verbose_name=_("return date"), null=True, blank=True)
     document_id = models.CharField(verbose_name=_("return document id"), max_length=50, null=True, blank=True)
     explanation = models.TextField(verbose_name=_("return explanation"), null=True, blank=True)
-    amount_to_payee = models.PositiveIntegerField(verbose_name=_("return amount to payee"), null=True, blank=True)
-    amount_to_state_budget = models.PositiveIntegerField(
-        verbose_name=_("return amount to state budget"), null=True, blank=True
+    amount_to_payee = models.DecimalField(
+        verbose_name=_("return amount to payee"), null=True, blank=True, decimal_places=2, max_digits=10
+    )
+    amount_to_state_budget = models.DecimalField(
+        verbose_name=_("return amount to state budget"), null=True, blank=True, decimal_places=2, max_digits=10
     )
 
     def __str__(self):
@@ -176,7 +180,9 @@ class Payee(models.Model):
     )
     # task 3
     name = models.CharField(verbose_name=_("payee name (first name + last name + name of the father)"), max_length=200)
-    identification = models.CharField(verbose_name=_("payee ID or Passport number"), max_length=100)
+    identification = models.CharField(
+        verbose_name=_("payee ID or Passport number"), max_length=100, null=True, blank=True
+    )
     address = models.CharField(verbose_name=_("payee Address"), max_length=200)
 
     def __str__(self):

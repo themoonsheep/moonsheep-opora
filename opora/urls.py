@@ -21,6 +21,7 @@ from .api import (
     ReportList, ReportDetail, PoliticalPartyList, PoliticalPartyDetail,
     ReturnList, ReturnDetail, DonationList, DonationDetail
 )
+from .tasks import *
 from .views import TranscriptionView, NewTaskFormView
 
 

@@ -44,6 +44,7 @@ class FindTableTask(AbstractTask):
                     report=report,
                     page_start=verified_data['page_start_{0}'.format(idx)],
                     page_end=verified_data['page_end_{0}'.format(idx)],
+                    total_funds=verified_data['total_funds_{0}'.format(idx)],
                     money_destination=md,
                     transaction_type=tt,
                     legal_identification=li
@@ -103,16 +104,6 @@ class GetTransactionIdsTask(AbstractTask):
 
     def save_verified_data(self, verified_data):
         report = get_object_or_404(Report, url=self.url)
-        # TODO: testme
-        transaction_pages = get_object_or_404(
-            TransactionPages,
-            report=report,
-            transaction_type=self.transaction_type,
-            money_destination=self.money_destination,
-            legal_identification=self.legal_identification
-        )
-        transaction_pages.total_funds = verified_data['total_funds']
-        transaction_pages.save(update_fields=['total_funds'])
         for transaction_id in verified_data['transaction_ids']:
             if self.transaction_type == TransactionPages.CASH_CONTRIBUTION:
                 Donation.objects.get_or_create(

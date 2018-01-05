@@ -23,7 +23,7 @@ class NewTaskFormView(FormView):
 
     def form_valid(self, form):
         import pbclient
-        from moonsheep.moonsheep_settings import PYBOSSA_BASE_URL, PYBOSSA_API_KEY
+        from moonsheep.settings import PYBOSSA_BASE_URL, PYBOSSA_API_KEY
         pbclient.set('endpoint', PYBOSSA_BASE_URL)
         pbclient.set('api_key', PYBOSSA_API_KEY)
         pbclient.create_task(

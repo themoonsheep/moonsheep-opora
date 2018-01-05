@@ -24,29 +24,15 @@
   2) from legal entities
   {% endif %}
 </h4>
-<div class="col-md-8">
-  <div class="form-group">
-    <label class="control-label" for="id_transaction_ids">Provide transaction IDs</label>
-    <input type="text"
-           class="form-control"
-           name="transaction_ids"
-           id="id_transaction_ids"
-           placeholder="Transaction IDs"
-           aria-describedby="transaction_ids_help"
-           required>
-    {{ form.errors.transaction_ids }}
-  </div>
-</div>
-<div class="col-md-4">
-  <div class="form-group{% if form.errors.total_funds %} has-error{% endif %}">
-    <label class="control-label" for="id_total_funds">Total funds</label>
-    <input type="text"
-           class="form-control"
-           name="total_funds"
-           id="id_total_funds"
-           placeholder="Enter total funds"
-           required>
-    {% if form.errors.total_funds %}<span class="help-block">{{ form.errors.total_funds }}</span>{% endif %}
-  </div>
+<div class="form-group">
+  <label class="control-label" for="id_transaction_ids">Provide transaction IDs</label>
+  <input type="text"
+         class="form-control"
+         name="transaction_ids"
+         id="id_transaction_ids"
+         placeholder="Transaction IDs"
+         aria-describedby="transaction_ids_help"
+         required>
+  {{ form.errors.transaction_ids }}
 </div>
 {% endblock %}

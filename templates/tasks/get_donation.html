@@ -15,18 +15,18 @@
             </label>
           </th>
           <th class="form-group{% if form.errors.account_type %} has-error{% endif %}">
-            <label class="control-label" for="id_amount">
+            <label class="control-label" for="id_account_type">
               Вид рахунку
-            </label>
-          </th>
-          <th class="form-group{% if form.errors.payee_name %} has-error{% endif %}">
-            <label class="control-label" for="id_payee_name">
-              Прізвище, ім’я, по батькові платника
             </label>
           </th>
           <th class="form-group{% if form.errors.transaction_id %} has-error{% endif %}">
             <label class="control-label" for="id_transaction_id">
               Номер розрахункового документа
+            </label>
+          </th>
+          <th class="form-group{% if form.errors.payee_name %} has-error{% endif %}">
+            <label class="control-label" for="id_payee_name">
+              Прізвище, ім’я, по батькові платника
             </label>
           </th>
           <th class="form-group{% if form.errors.payee_identification %} has-error{% endif %}">
@@ -56,13 +56,13 @@
             <input type="text" class="form-control input-sm" id="id_account_type" name="account_type">
             {% if form.errors.account_type %}<span class="help-block">{{ form.errors.account_type }}</span>{% endif %}
           </td>
-          <td class="form-group{% if form.errors.payee_name %} has-error{% endif %}">
-            <input type="text" class="form-control input-sm" id="id_payee_name" name="payee_name">
-            {% if form.errors.payee_name %}<span class="help-block">{{ form.errors.payee_name }}</span>{% endif %}
-          </td>
           <td class="form-group{% if form.errors.transaction_id %} has-error{% endif %}">
             <input type="text" class="form-control input-sm" id="id_transaction_id" value="{{ task.transaction_id }}" disabled>
             {% if form.errors.transaction_id %}<span class="help-block">{{ form.errors.transaction_id }}</span>{% endif %}
+          </td>
+          <td class="form-group{% if form.errors.payee_name %} has-error{% endif %}">
+            <input type="text" class="form-control input-sm" id="id_payee_name" name="payee_name">
+            {% if form.errors.payee_name %}<span class="help-block">{{ form.errors.payee_name }}</span>{% endif %}
           </td>
           <td class="form-group{% if form.errors.payee_identification %} has-error{% endif %}">
             <input type="text" class="form-control input-sm" id="id_payee_identification" name="payee_identification">

@@ -6,13 +6,6 @@
 <h3>Find the following data on the 1st page of the report:</h3>
 <div class="row">
   <div class="col-md-4">
-    <div class="form-group{% if form.errors.date %} has-error{% endif %}">
-      <label for="id_date" class="orange">Report date</label>
-      <input type="date" class="form-control" name="date" id="id_date" aria-describedby="date_help" placeholder="Enter report date" required>
-      {% if form.errors.date %}<span class="help-block">{{ form.errors.date }}</span>{% endif %}
-    </div>
-  </div>
-  <div class="col-md-4">
     <div class="form-group{% if form.errors.party_name %} has-error{% endif %}">
       <label for="id_party_name" class="orange">Party name</label>
       <input type="text" class="form-control" name="party_name" id="id_party_name" aria-describedby="party_name_help" placeholder="Enter party name" required>
@@ -35,10 +28,17 @@
       <label class="orange">1) from individuals</label>
       <div class="form-inline">
         <div class="form-group">
-          <input type="number" class="form-control" name="page_start_111" id="id_page_start_111" placeholder="First page">
+          <label class="control-label" for="id_page_start_111">Pages:</label>
+          <input type="number" class="form-control page-input" name="page_start_111" id="id_page_start_111">
+          -
+          <input type="number" class="form-control page-input" name="page_end_111" id="id_page_end_111">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" name="page_end_111" id="id_page_end_111" placeholder="Last page">
+          <label class="control-label" for="id_total_funds_111">Total funds:</label>
+          <input type="text"
+                 class="form-control"
+                 name="total_funds_111"
+                 id="id_total_funds_111">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
@@ -51,10 +51,17 @@
       <label class="orange">2) from legal entities</label>
       <div class="form-inline">
         <div class="form-group">
-          <input type="number" class="form-control" name="page_start_112" id="id_page_start_112" placeholder="First page">
+          <label class="control-label" for="id_page_start_112">Pages:</label>
+          <input type="number" class="form-control page-input" name="page_start_112" id="id_page_start_112">
+          -
+          <input type="number" class="form-control page-input" name="page_end_112" id="id_page_end_112">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" name="page_end_112" id="id_page_end_112" placeholder="Last page">
+          <label class="control-label" for="id_total_funds_112">Total funds:</label>
+          <input type="text"
+                 class="form-control"
+                 name="total_funds_112"
+                 id="id_total_funds_112">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
@@ -72,10 +79,17 @@
       <label class="orange">1) from individuals</label>
       <div class="form-inline">
         <div class="form-group">
-          <input type="number" class="form-control" name="page_start_121" id="id_page_start_121" placeholder="First page">
+          <label class="control-label" for="id_page_start_121">Pages:</label>
+          <input type="number" class="form-control page-input" name="page_start_121" id="id_page_start_121">
+          -
+          <input type="number" class="form-control page-input" name="page_end_121" id="id_page_end_121">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" name="page_end_121" id="id_page_end_121" placeholder="Last page">
+          <label class="control-label" for="id_total_funds_121">Total funds:</label>
+          <input type="text"
+                 class="form-control"
+                 name="total_funds_121"
+                 id="id_total_funds_121">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
@@ -88,10 +102,17 @@
       <label class="orange">2) from legal entities</label>
       <div class="form-inline">
         <div class="form-group">
-          <input type="number" class="form-control" name="page_start_122" id="id_page_start_122" placeholder="First page">
+          <label class="control-label" for="id_page_start_122">Pages:</label>
+          <input type="number" class="form-control page-input" name="page_start_122" id="id_page_start_122">
+          -
+          <input type="number" class="form-control page-input" name="page_end_122" id="id_page_end_122">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" name="page_end_122" id="id_page_end_122" placeholder="Last page">
+          <label class="control-label" for="id_total_funds_122">Total funds:</label>
+          <input type="text"
+                 class="form-control"
+                 name="total_funds_122"
+                 id="id_total_funds_122">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
@@ -109,10 +130,17 @@
       <label class="orange">1) from individuals</label>
       <div class="form-inline">
         <div class="form-group">
-          <input type="number" class="form-control" name="page_start_131" id="id_page_start_131" placeholder="First page">
+          <label class="control-label" for="id_page_start_131">Pages:</label>
+          <input type="number" class="form-control page-input" name="page_start_131" id="id_page_start_131">
+          -
+          <input type="number" class="form-control page-input" name="page_end_131" id="id_page_end_131">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" name="page_end_131" id="id_page_end_131" placeholder="Last page">
+          <label class="control-label" for="id_total_funds_131">Total funds:</label>
+          <input type="text"
+                 class="form-control"
+                 name="total_funds_131"
+                 id="id_total_funds_131">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
@@ -125,10 +153,17 @@
       <label class="orange">2) from legal entities</label>
       <div class="form-inline">
         <div class="form-group">
-          <input type="number" class="form-control" name="page_start_132" id="id_page_start_132" placeholder="First page">
+          <label class="control-label" for="id_page_start_132">Pages:</label>
+          <input type="number" class="form-control page-input" name="page_start_132" id="id_page_start_132">
+          -
+          <input type="number" class="form-control page-input" name="page_end_132" id="id_page_end_132">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" name="page_end_132" id="id_page_end_132" placeholder="Last page">
+          <label class="control-label" for="id_total_funds_132">Total funds:</label>
+          <input type="text"
+                 class="form-control"
+                 name="total_funds_132"
+                 id="id_total_funds_132">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
@@ -146,10 +181,17 @@
       <label class="orange">1) from individuals</label>
       <div class="form-inline">
         <div class="form-group">
-          <input type="number" class="form-control" name="page_start_211" id="id_page_start_211" placeholder="First page">
+          <label class="control-label" for="id_page_start_211">Pages:</label>
+          <input type="number" class="form-control page-input" name="page_start_211" id="id_page_start_211">
+          -
+          <input type="number" class="form-control page-input" name="page_end_211" id="id_page_end_211">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" name="page_end_211" id="id_page_end_211" placeholder="Last page">
+          <label class="control-label" for="id_total_funds_211">Total funds:</label>
+          <input type="text"
+                 class="form-control"
+                 name="total_funds_211"
+                 id="id_total_funds_211">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
@@ -162,10 +204,17 @@
       <label class="orange">2) from legal entities</label>
       <div class="form-inline page-range">
         <div class="form-group">
-          <input type="number" class="form-control" name="page_start_212" id="id_page_start_212" placeholder="First page">
+          <label class="control-label" for="id_page_start_212">Pages:</label>
+          <input type="number" class="form-control page-input" name="page_start_212" id="id_page_start_212" placeholder="First page">
+          -
+          <input type="number" class="form-control page-input" name="page_end_212" id="id_page_end_212" placeholder="Last page">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" name="page_end_212" id="id_page_end_212" placeholder="Last page">
+          <label class="control-label" for="id_total_funds_212">Total funds:</label>
+          <input type="text"
+                 class="form-control"
+                 name="total_funds_212"
+                 id="id_total_funds_212">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
@@ -183,10 +232,17 @@
       <label class="orange">1) from individuals</label>
       <div class="form-inline">
         <div class="form-group">
-          <input type="number" class="form-control" name="page_start_221" id="id_page_start_221" placeholder="First page">
+          <label class="control-label" for="id_page_start_221">Pages:</label>
+          <input type="number" class="form-control page-input" name="page_start_221" id="id_page_start_221">
+          -
+          <input type="number" class="form-control page-input" name="page_end_221" id="id_page_end_221">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" name="page_end_221" id="id_page_end_221" placeholder="Last page">
+          <label class="control-label" for="id_total_funds_221">Total funds:</label>
+          <input type="text"
+                 class="form-control"
+                 name="total_funds_221"
+                 id="id_total_funds_221">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
@@ -199,10 +255,17 @@
       <label class="orange">2) from legal entities</label>
       <div class="form-inline">
         <div class="form-group">
-          <input type="number" class="form-control" name="page_start_222" id="id_page_start_222" placeholder="First page">
+          <label class="control-label" for="id_page_start_222">Pages:</label>
+          <input type="number" class="form-control page-input" name="page_start_222" id="id_page_start_222">
+          -
+          <input type="number" class="form-control page-input" name="page_end_222" id="id_page_end_222">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" name="page_end_222" id="id_page_end_222" placeholder="Last page">
+          <label class="control-label" for="id_total_funds_222">Total funds:</label>
+          <input type="text"
+                 class="form-control"
+                 name="total_funds_222"
+                 id="id_total_funds_222">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
@@ -220,10 +283,17 @@
       <label class="orange">1) from individuals</label>
       <div class="form-inline">
         <div class="form-group">
-          <input type="number" class="form-control" name="page_start_231" id="id_page_start_231" placeholder="First page">
+          <label class="control-label" for="id_page_start_231">Pages:</label>
+          <input type="number" class="form-control page-input" name="page_start_231" id="id_page_start_231">
+          -
+          <input type="number" class="form-control page-input" name="page_end_231" id="id_page_end_231">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" name="page_end_231" id="id_page_end_231" placeholder="Last page">
+          <label class="control-label" for="id_total_funds_231">Total funds:</label>
+          <input type="text"
+                 class="form-control"
+                 name="total_funds_231"
+                 id="id_total_funds_231">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
@@ -236,10 +306,17 @@
       <label class="orange">2) from legal entities</label>
       <div class="form-inline">
         <div class="form-group">
-          <input type="number" class="form-control" name="page_start_232" id="id_page_start_232" placeholder="First page">
+          <label class="control-label" for="id_page_start_232">Pages:</label>
+          <input type="number" class="form-control page-input" name="page_start_232" id="id_page_start_232">
+          -
+          <input type="number" class="form-control page-input" name="page_end_232" id="id_page_end_232">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" name="page_end_232" id="id_page_end_232" placeholder="Last page">
+          <label class="control-label" for="id_total_funds_232">Total funds:</label>
+          <input type="text"
+                 class="form-control"
+                 name="total_funds_232"
+                 id="id_total_funds_232">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
@@ -250,6 +327,19 @@
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-offset-4 col-md-4">
+    <div class="form-group{% if form.errors.date %} has-error{% endif %}">
+      <label for="id_date" class="orange">Report date</label>
+      <input type="date" class="form-control" name="date" id="id_date" aria-describedby="date_help" placeholder="Enter report date" required>
+      {% if form.errors.date %}<span class="help-block">{{ form.errors.date }}</span>{% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static "css/tasks.css" %}">
 {% endblock %}
 
 {#{% block scripts %}#}
