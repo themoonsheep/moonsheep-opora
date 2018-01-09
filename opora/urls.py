@@ -22,7 +22,7 @@ from .api import (
     ReturnList, ReturnDetail, DonationList, DonationDetail
 )
 from .tasks import *
-from .views import TranscriptionView, NewTaskFormView
+from .views import TranscriptionView
 from .tasks import *# Keep it to make Moonsheep aware of defined tasks
 
 api_urlpatterns = [
@@ -42,7 +42,6 @@ urlpatterns = [
 
     url(r'^$', TemplateView.as_view(template_name='homepage.html'), name='home'),
     url(r'^api/', include(api_urlpatterns)),
-    url(r'^new-task/', NewTaskFormView.as_view(), name='new-task'),
     url(r'^transcription/$', TranscriptionView.as_view(), name='transcription'),
     url(r'^thank-you/$', TemplateView.as_view(template_name='thankyou.html'), name='thank-you'),
 ]

@@ -22,7 +22,7 @@ class FindTableTask(AbstractTask):
         "record_id": ""
     }
     """
-    task_template = 'tasks/find_table.html'
+    template_name = 'tasks/find_table.html'
     task_form = FindTableForm
 
     def create_mocked_task(self, data):
@@ -91,7 +91,7 @@ class GetTransactionIdsTask(AbstractTask):
         "record_id": ""
     }
     """
-    task_template = 'tasks/get_transaction_ids.html'
+    template_name = 'tasks/get_transaction_ids.html'
     task_form = GetTransactionIdsForm
 
     def create_mocked_task(self, data):
@@ -178,7 +178,7 @@ class GetDonationTask(AbstractTask):
         "record_id": "1"
     }
     """
-    task_template = 'tasks/get_donation.html'
+    template_name = 'tasks/get_donation.html'
     task_form = GetDonationForm
 
     def create_mocked_task(self, data):
@@ -250,7 +250,7 @@ class GetReturnTask(AbstractTask):
         "record_id": "1"
     }
     """
-    task_template = 'tasks/get_return.html'
+    template_name = 'tasks/get_return.html'
     task_form = GetReturnForm
 
     def __init__(self, **kwargs):

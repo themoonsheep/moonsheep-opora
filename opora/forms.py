@@ -5,15 +5,13 @@ from moonsheep.forms import MultipleRangeField
 from .models import TransactionPages
 
 
-class NewTaskForm(forms.Form):
-    url = forms.URLField(label="Report URL")
-    # task_class = forms.CharField()
-
-
 class FindTableForm(forms.Form):
     party_name = forms.CharField(label="Party name")
     party_legal_id = forms.CharField(label="Party legal ID")
     date = forms.CharField(label="Report date", widget=forms.SelectDateWidget)
+
+    class Meta:
+        localized_fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(FindTableForm, self).__init__(*args, **kwargs)
@@ -62,6 +60,9 @@ class FindTableForm(forms.Form):
 class GetTransactionIdsForm(forms.Form):
     transaction_ids = MultipleRangeField(label="Transaction IDs")
 
+    class Meta:
+        localized_fields = '__all__'
+
 
 class GetTransactionForm(forms.Form):
     receipt_date = forms.CharField(label="Receipt date", widget=forms.SelectDateWidget)
@@ -71,9 +72,15 @@ class GetTransactionForm(forms.Form):
     payee_identification = forms.CharField(label="Payee identification", required=False)
     payee_address = forms.CharField(label="Payee address")
 
+    class Meta:
+        localized_fields = '__all__'
+
 
 class GetDonationForm(GetTransactionForm):
     account_type = forms.CharField(label="Account type")
+
+    class Meta:
+        localized_fields = '__all__'
 
 
 class GetReturnForm(GetTransactionForm):
@@ -82,3 +89,6 @@ class GetReturnForm(GetTransactionForm):
     explanation = forms.CharField(label="Return explanation")
     amount_to_payee = forms.CharField(label="Return amount to payee")
     amount_to_state_budget = forms.CharField(label="Return amount to state budget")
+
+    class Meta:
+        localized_fields = '__all__'
