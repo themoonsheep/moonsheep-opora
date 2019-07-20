@@ -3,13 +3,14 @@ import random
 
 from django.shortcuts import get_object_or_404
 
-from moonsheep.tasks import AbstractTask
+from moonsheep.tasks import AbstractTask, register_task
 from moonsheep.verifiers import *
 
 from .forms import FindTableForm, GetTransactionIdsForm, GetDonationForm, GetReturnForm
 from .models import TransactionPages, PoliticalParty, Report, Donation, Return, Payee
 
 
+@register_task()
 class FindTableTask(AbstractTask):
     """
     Choose pages containing crucial tables and get metadata (party, date)
@@ -79,6 +80,7 @@ class FindTableTask(AbstractTask):
                 self.create_new_task(GetTransactionIdsTask, params)
 
 
+@register_task()
 class GetTransactionIdsTask(AbstractTask):
     """
     List IDs of transactions on a page X
@@ -166,6 +168,7 @@ class GetTransactionIdsTask(AbstractTask):
                 self.create_new_task(GetReturnTask, params)
 
 
+@register_task()
 class GetDonationTask(AbstractTask):
     """
     Get donation of transaction idY
@@ -238,6 +241,7 @@ class GetDonationTask(AbstractTask):
         report.save()
 
 
+@register_task()
 class GetReturnTask(AbstractTask):
     """
     Get donation of transaction idY
