@@ -8,6 +8,9 @@ ALLOWED_HOSTS = [
     '*'
 ]
 
+# SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = 'set it'
+
 DATABASES = {'default': dj_database_url.config()}
 
 # moonsheep settings
