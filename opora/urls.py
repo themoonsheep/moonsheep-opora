@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.urls import path
 from django.views.generic import TemplateView
 
 from .tasks import *
@@ -34,3 +35,13 @@ urlpatterns = [
     url(r'^api/opora/', AppApi('opora').urls),
     url(r'^api-auth/', include('rest_framework.urls'))
 ]
+
+
+# DEV-DEBUG
+from django.conf import settings
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
+
