@@ -18,7 +18,8 @@ class FindTableForm(forms.Form):
         for md, tt, li in TransactionPages.iterations():
             idx = '{0}{1}{2}'.format(md, tt, li)
             self.fields['no_pages_{0}'.format(idx)] = \
-                forms.BooleanField(label="No pages", required=False)
+                forms.BooleanField(label="No pages", required=False,
+                                   widget=forms.CheckboxInput(attrs={'class': "form-check-input"}))
             self.fields['page_start_{0}'.format(idx)] = \
                 forms.IntegerField(label="First page number", required=False)
             self.fields['page_end_{0}'.format(idx)] = \
@@ -35,24 +36,25 @@ class FindTableForm(forms.Form):
             page_end = cleaned_data.get("page_end_{0}".format(idx))
             total_funds = cleaned_data.get("total_funds_{0}".format(idx))
             no_pages = cleaned_data.get("no_pages_{0}".format(idx))
-            if bool(page_start and page_end and total_funds) == bool(no_pages):
-                if bool(page_start and page_end and total_funds):
-                    message = \
-                        "Don't provide no pages and page start, page end and total funds for form {0}.".format(idx)
+            if not bool(no_pages):
+                # Check if all data provided
+                if not (bool(page_start) and bool(page_end) and total_funds is not None):
+                    self.add_error('no_pages_' + idx, forms.ValidationError("Fill in all data for this table or say it "
+                                                                         "doesn't exist."))
                 else:
-                    message = \
-                        "Provide no pages or provide page start, page end and total funds for form {0}.".format(idx)
-                raise forms.ValidationError(message)
-            elif bool(page_start) != bool(page_end) or bool(page_start) != bool(total_funds):
-                if not bool(page_start):
-                    message = "Provide page start for form {0}.".format(idx)
-                elif not bool(page_end):
-                    message = "Provide page end for form {0}.".format(idx)
-                elif not bool(total_funds):
-                    message = "Provide total funds for form {0}.".format(idx)
-                raise forms.ValidationError(message)
-            if bool(page_start and page_end) and page_end < page_start:
-                raise forms.ValidationError("Last page must be greater or equal than first page.")
+                    if page_end < page_start:
+                        self.add_error('no_pages_' + idx, forms.ValidationError("Last page must be greater or equal than "
+                                                                         "first page."))
+                    if page_start < 1:
+                        self.add_error('no_pages_' + idx,
+                                       forms.ValidationError("Page must be a positive number."))
+            else:
+                cleaned_data['page_end_' + idx] = None
+                cleaned_data['page_start_' + idx] = None
+                cleaned_data['page_total_funds_' + idx] = None
+
+        if self.errors:
+            raise forms.ValidationError("Please correct errors below.")
 
         return cleaned_data
 

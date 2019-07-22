@@ -8,14 +8,14 @@
   <div class="col-md-4">
     <div class="form-group{% if form.errors.party_name %} has-error{% endif %}">
       <label for="id_party_name" class="orange">Party name</label>
-      <input type="text" class="form-control" name="party_name" id="id_party_name" aria-describedby="party_name_help" placeholder="Enter party name" required>
+      <input type="text" class="form-control" name="party_name" id="id_party_name" aria-describedby="party_name_help" placeholder="Enter party name" value="{{ form.party_name.value }}" required>
       {% if form.errors.party_name %}<span class="help-block">{{ form.errors.party_name }}</span>{% endif %}
     </div>
   </div>
   <div class="col-md-4">
     <div class="form-group{% if form.errors.party_legal_id %} has-error{% endif %}">
       <label for="id_party_legal_id" class="orange">Party legal ID</label>
-      <input type="text" class="form-control" name="party_legal_id" id="id_party_legal_id" aria-describedby="party_legal_id_help" placeholder="Enter party legal ID" required>
+      <input type="text" class="form-control" name="party_legal_id" id="id_party_legal_id" aria-describedby="party_legal_id_help" placeholder="Enter party legal ID" value="{{ form.party_legal_id.value }}" required>
       {% if form.errors.party_legal_id %}<span class="help-block">{{ form.errors.party_legal_id }}</span>{% endif %}
     </div>
   </div>
@@ -24,306 +24,318 @@
 <div class="row">
   <h4>1.1. Contributions by money to political party accounts</h4>
   <div class="form-inline">
-    <div class="col-md-6 form-group page-range">
+    <div class="col-md-6 form-group {% if form.errors.no_pages_111 %}has-error{% endif %} page-range">
       <label class="orange">1) from individuals</label>
       <div class="form-inline">
         <div class="form-group">
           <label class="control-label" for="id_page_start_111">Pages:</label>
-          <input type="number" class="form-control page-input" name="page_start_111" id="id_page_start_111">
+          <input type="number" class="form-control page-input" name="page_start_111" id="id_page_start_111" value="{{ form.page_start_111.value }}">
           -
-          <input type="number" class="form-control page-input" name="page_end_111" id="id_page_end_111">
+          <input type="number" class="form-control page-input" name="page_end_111" id="id_page_end_111" value="{{ form.page_end_111.value }}">
         </div>
         <div class="form-group">
           <label class="control-label" for="id_total_funds_111">Total funds:</label>
           <input type="text"
                  class="form-control"
                  name="total_funds_111"
-                 id="id_total_funds_111">
+                 id="id_total_funds_111" value="{{ form.total_funds_111.value }}">
         </div>
         <div class="form-group form-check form-check-inline">
-          <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="no_pages_111" id="id_no_pages_111" value="true"> No table
+          <label class="form-check-label"><!-- TODO gray out other values if this is selected -->
+            {{ form.no_pages_111 }} No table
           </label>
         </div>
       </div>
+      {% if form.errors.no_pages_111 %}<span class="help-block">{{ form.errors.no_pages_111 }}</span>{% endif %}
     </div>
-    <div class="col-md-6 form-group page-range">
+    <div class="col-md-6 form-group {% if form.errors.no_pages_112 %}has-error{% endif %} page-range">
       <label class="orange">2) from legal entities</label>
       <div class="form-inline">
         <div class="form-group">
           <label class="control-label" for="id_page_start_112">Pages:</label>
-          <input type="number" class="form-control page-input" name="page_start_112" id="id_page_start_112">
+          <input type="number" class="form-control page-input" name="page_start_112" id="id_page_start_112" value="{{ form.page_start_112.value }}">
           -
-          <input type="number" class="form-control page-input" name="page_end_112" id="id_page_end_112">
+          <input type="number" class="form-control page-input" name="page_end_112" id="id_page_end_112" value="{{ form.page_end_112.value }}">
         </div>
         <div class="form-group">
           <label class="control-label" for="id_total_funds_112">Total funds:</label>
           <input type="text"
                  class="form-control"
                  name="total_funds_112"
-                 id="id_total_funds_112">
+                 id="id_total_funds_112" value="{{ form.total_funds_112.value }}">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="no_pages_112" id="id_no_pages_112" value="option1"> No table
+            {{ form.no_pages_112 }} No table
           </label>
         </div>
       </div>
+      {% if form.errors.no_pages_112 %}<span class="help-block">{{ form.errors.no_pages_112 }}</span>{% endif %}
     </div>
   </div>
 </div>
 <div class="row">
   <h4>1.2. Information on the return and transfer to the State Budget of Ukraine funds received in violation of the law on political party accounts</h4>
   <div class="form-inline">
-    <div class="col-md-6 form-group page-range">
+    <div class="col-md-6 form-group {% if form.errors.no_pages_121 %}has-error{% endif %} page-range">
       <label class="orange">1) from individuals</label>
       <div class="form-inline">
         <div class="form-group">
           <label class="control-label" for="id_page_start_121">Pages:</label>
-          <input type="number" class="form-control page-input" name="page_start_121" id="id_page_start_121">
+          <input type="number" class="form-control page-input" name="page_start_121" id="id_page_start_121" value="{{ form.page_start_121.value }}">
           -
-          <input type="number" class="form-control page-input" name="page_end_121" id="id_page_end_121">
+          <input type="number" class="form-control page-input" name="page_end_121" id="id_page_end_121" value="{{ form.page_end_121.value }}">
         </div>
         <div class="form-group">
           <label class="control-label" for="id_total_funds_121">Total funds:</label>
           <input type="text"
                  class="form-control"
                  name="total_funds_121"
-                 id="id_total_funds_121">
+                 id="id_total_funds_121" value="{{ form.total_funds_121.value }}">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="no_pages_121" id="id_no_pages_121" value="option1"> No table
+            {{ form.no_pages_121 }} No table
           </label>
         </div>
       </div>
+      {% if form.errors.no_pages_121 %}<span class="help-block">{{ form.errors.no_pages_121 }}</span>{% endif %}
     </div>
-    <div class="col-md-6 form-group page-range">
+    <div class="col-md-6 form-group {% if form.errors.no_pages_122 %}has-error{% endif %} page-range">
       <label class="orange">2) from legal entities</label>
       <div class="form-inline">
         <div class="form-group">
           <label class="control-label" for="id_page_start_122">Pages:</label>
-          <input type="number" class="form-control page-input" name="page_start_122" id="id_page_start_122">
+          <input type="number" class="form-control page-input" name="page_start_122" id="id_page_start_122" value="{{ form.page_start_122.value }}">
           -
-          <input type="number" class="form-control page-input" name="page_end_122" id="id_page_end_122">
+          <input type="number" class="form-control page-input" name="page_end_122" id="id_page_end_122" value="{{ form.page_end_122.value }}">
         </div>
         <div class="form-group">
           <label class="control-label" for="id_total_funds_122">Total funds:</label>
           <input type="text"
                  class="form-control"
                  name="total_funds_122"
-                 id="id_total_funds_122">
+                 id="id_total_funds_122" value="{{ form.total_funds_122.value }}">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="no_pages_122" id="id_no_pages_122" value="option1"> No table
+            {{ form.no_pages_122 }} No table
           </label>
         </div>
       </div>
+      {% if form.errors.no_pages_122 %}<span class="help-block">{{ form.errors.no_pages_122 }}</span>{% endif %}
     </div>
   </div>
 </div>
 <div class="row">
   <h4>1.3. Information on the return and transfer to the State Budget of Ukraine funds received by political parties in error</h4>
   <div class="form-inline">
-    <div class="col-md-6 form-group page-range">
+    <div class="col-md-6 form-group {% if form.errors.no_pages_131 %}has-error{% endif %} page-range">
       <label class="orange">1) from individuals</label>
       <div class="form-inline">
         <div class="form-group">
           <label class="control-label" for="id_page_start_131">Pages:</label>
-          <input type="number" class="form-control page-input" name="page_start_131" id="id_page_start_131">
+          <input type="number" class="form-control page-input" name="page_start_131" id="id_page_start_131" value="{{ form.page_start_131.value }}">
           -
-          <input type="number" class="form-control page-input" name="page_end_131" id="id_page_end_131">
+          <input type="number" class="form-control page-input" name="page_end_131" id="id_page_end_131" value="{{ form.page_end_131.value }}">
         </div>
         <div class="form-group">
           <label class="control-label" for="id_total_funds_131">Total funds:</label>
           <input type="text"
                  class="form-control"
                  name="total_funds_131"
-                 id="id_total_funds_131">
+                 id="id_total_funds_131" value="{{ form.total_funds_131.value }}">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="no_pages_131" id="id_no_pages_131" value="option1"> No table
+            {{ form.no_pages_131 }} No table
           </label>
         </div>
       </div>
+      {% if form.errors.no_pages_131 %}<span class="help-block">{{ form.errors.no_pages_131 }}</span>{% endif %}
     </div>
-    <div class="col-md-6 form-group page-range">
+    <div class="col-md-6 form-group {% if form.errors.no_pages_132 %}has-error{% endif %} page-range">
       <label class="orange">2) from legal entities</label>
       <div class="form-inline">
         <div class="form-group">
           <label class="control-label" for="id_page_start_132">Pages:</label>
-          <input type="number" class="form-control page-input" name="page_start_132" id="id_page_start_132">
+          <input type="number" class="form-control page-input" name="page_start_132" id="id_page_start_132" value="{{ form.page_start_132.value }}">
           -
-          <input type="number" class="form-control page-input" name="page_end_132" id="id_page_end_132">
+          <input type="number" class="form-control page-input" name="page_end_132" id="id_page_end_132" value="{{ form.page_end_132.value }}">
         </div>
         <div class="form-group">
           <label class="control-label" for="id_total_funds_132">Total funds:</label>
           <input type="text"
                  class="form-control"
                  name="total_funds_132"
-                 id="id_total_funds_132">
+                 id="id_total_funds_132" value="{{ form.total_funds_132.value }}">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="no_pages_132" id="id_no_pages_132" value="option1"> No table
+            {{ form.no_pages_132 }} No table
           </label>
         </div>
       </div>
+      {% if form.errors.no_pages_132 %}<span class="help-block">{{ form.errors.no_pages_132 }}</span>{% endif %}
     </div>
   </div>
 </div>
 <div class="row">
   <h4>1.4. Contributions by money to the accounts of the election fund of a political party</h4>
   <div class="form-inline">
-    <div class="col-md-6 form-group page-range">
+    <div class="col-md-6 form-group {% if form.errors.no_pages_211 %}has-error{% endif %} page-range">
       <label class="orange">1) from individuals</label>
       <div class="form-inline">
         <div class="form-group">
           <label class="control-label" for="id_page_start_211">Pages:</label>
-          <input type="number" class="form-control page-input" name="page_start_211" id="id_page_start_211">
+          <input type="number" class="form-control page-input" name="page_start_211" id="id_page_start_211" value="{{ form.page_start_211.value }}">
           -
-          <input type="number" class="form-control page-input" name="page_end_211" id="id_page_end_211">
+          <input type="number" class="form-control page-input" name="page_end_211" id="id_page_end_211" value="{{ form.page_end_211.value }}">
         </div>
         <div class="form-group">
           <label class="control-label" for="id_total_funds_211">Total funds:</label>
           <input type="text"
                  class="form-control"
                  name="total_funds_211"
-                 id="id_total_funds_211">
+                 id="id_total_funds_211" value="{{ form.total_funds_211.value }}">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="no_pages_211" id="id_no_pages_211" value="option1"> No table
+            {{ form.no_pages_211 }} No table
           </label>
         </div>
       </div>
+      {% if form.errors.no_pages_211 %}<span class="help-block">{{ form.errors.no_pages_211 }}</span>{% endif %}
     </div>
-    <div class="col-md-6 form-group page-range">
+    <div class="col-md-6 form-group {% if form.errors.no_pages_212 %}has-error{% endif %} page-range">
       <label class="orange">2) from legal entities</label>
       <div class="form-inline page-range">
         <div class="form-group">
           <label class="control-label" for="id_page_start_212">Pages:</label>
-          <input type="number" class="form-control page-input" name="page_start_212" id="id_page_start_212" placeholder="First page">
+          <input type="number" class="form-control page-input" name="page_start_212" id="id_page_start_212" value="{{ form.page_start_212.value }}">
           -
-          <input type="number" class="form-control page-input" name="page_end_212" id="id_page_end_212" placeholder="Last page">
+          <input type="number" class="form-control page-input" name="page_end_212" id="id_page_end_212" value="{{ form.page_end_212.value }}">
         </div>
         <div class="form-group">
           <label class="control-label" for="id_total_funds_212">Total funds:</label>
           <input type="text"
                  class="form-control"
                  name="total_funds_212"
-                 id="id_total_funds_212">
+                 id="id_total_funds_212" value="{{ form.total_funds_212.value }}">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="no_pages_212" id="id_no_pages_212" value="option1"> No table
+            {{ form.no_pages_212 }} No table
           </label>
         </div>
       </div>
+      {% if form.errors.no_pages_212 %}<span class="help-block">{{ form.errors.no_pages_212 }}</span>{% endif %}
     </div>
   </div>
 </div>
 <div class="row">
   <h4>1.5. Information about the return and transfer to the State Budget of Ukraine of cash received in violation of the legislation requirements on the accounts of the election fund</h4>
   <div class="form-inline">
-    <div class="col-md-6 form-group page-range">
+    <div class="col-md-6 form-group {% if form.errors.no_pages_221 %}has-error{% endif %} page-range">
       <label class="orange">1) from individuals</label>
       <div class="form-inline">
         <div class="form-group">
           <label class="control-label" for="id_page_start_221">Pages:</label>
-          <input type="number" class="form-control page-input" name="page_start_221" id="id_page_start_221">
+          <input type="number" class="form-control page-input" name="page_start_221" id="id_page_start_221" value="{{ form.page_start_221.value }}">
           -
-          <input type="number" class="form-control page-input" name="page_end_221" id="id_page_end_221">
+          <input type="number" class="form-control page-input" name="page_end_221" id="id_page_end_221" value="{{ form.page_end_221.value }}">
         </div>
         <div class="form-group">
           <label class="control-label" for="id_total_funds_221">Total funds:</label>
           <input type="text"
                  class="form-control"
                  name="total_funds_221"
-                 id="id_total_funds_221">
+                 id="id_total_funds_221" value="{{ form.total_funds_221.value }}">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="no_pages_221" id="id_no_pages_221" value="option1"> No table
+            {{ form.no_pages_221 }} No table
           </label>
         </div>
       </div>
+      {% if form.errors.no_pages_221 %}<span class="help-block">{{ form.errors.no_pages_221 }}</span>{% endif %}
     </div>
-    <div class="col-md-6 form-group page-range">
+    <div class="col-md-6 form-group {% if form.errors.no_pages_222 %}has-error{% endif %} page-range">
       <label class="orange">2) from legal entities</label>
       <div class="form-inline">
         <div class="form-group">
           <label class="control-label" for="id_page_start_222">Pages:</label>
-          <input type="number" class="form-control page-input" name="page_start_222" id="id_page_start_222">
+          <input type="number" class="form-control page-input" name="page_start_222" id="id_page_start_222" value="{{ form.page_start_222.value }}">
           -
-          <input type="number" class="form-control page-input" name="page_end_222" id="id_page_end_222">
+          <input type="number" class="form-control page-input" name="page_end_222" id="id_page_end_222" value="{{ form.page_end_222.value }}">
         </div>
         <div class="form-group">
           <label class="control-label" for="id_total_funds_222">Total funds:</label>
           <input type="text"
                  class="form-control"
                  name="total_funds_222"
-                 id="id_total_funds_222">
+                 id="id_total_funds_222" value="{{ form.total_funds_222.value }}">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="no_pages_222" id="id_no_pages_222" value="option1"> No table
+            {{ form.no_pages_222 }} No table
           </label>
         </div>
       </div>
+      {% if form.errors.no_pages_222 %}<span class="help-block">{{ form.errors.no_pages_222 }}</span>{% endif %}
     </div>
   </div>
 </div>
 <div class="row">
   <h4>1.6. Information about the return and transfer to the State Budget of Ukraine of cash received by mistake on the accounts of the election fund</h4>
   <div class="form-inline">
-    <div class="col-md-6 form-group page-range">
+    <div class="col-md-6 form-group {% if form.errors.no_pages_231 %}has-error{% endif %} page-range">
       <label class="orange">1) from individuals</label>
       <div class="form-inline">
         <div class="form-group">
           <label class="control-label" for="id_page_start_231">Pages:</label>
-          <input type="number" class="form-control page-input" name="page_start_231" id="id_page_start_231">
+          <input type="number" class="form-control page-input" name="page_start_231" id="id_page_start_231" value="{{ form.page_start_231.value }}">
           -
-          <input type="number" class="form-control page-input" name="page_end_231" id="id_page_end_231">
+          <input type="number" class="form-control page-input" name="page_end_231" id="id_page_end_231" value="{{ form.page_end_231.value }}">
         </div>
         <div class="form-group">
           <label class="control-label" for="id_total_funds_231">Total funds:</label>
           <input type="text"
                  class="form-control"
                  name="total_funds_231"
-                 id="id_total_funds_231">
+                 id="id_total_funds_231" value="{{ form.total_funds_231.value }}">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="no_pages_231" id="id_no_pages_231" value="option1"> No table
+            {{ form.no_pages_231 }} No table
           </label>
         </div>
       </div>
+      {% if form.errors.no_pages_231 %}<span class="help-block">{{ form.errors.no_pages_231 }}</span>{% endif %}
     </div>
-    <div class="col-md-6 form-group page-range">
+    <div class="col-md-6 form-group {% if form.errors.no_pages_232 %}has-error{% endif %} page-range">
       <label class="orange">2) from legal entities</label>
       <div class="form-inline">
         <div class="form-group">
           <label class="control-label" for="id_page_start_232">Pages:</label>
-          <input type="number" class="form-control page-input" name="page_start_232" id="id_page_start_232">
+          <input type="number" class="form-control page-input" name="page_start_232" id="id_page_start_232" value="{{ form.page_start_232.value }}">
           -
-          <input type="number" class="form-control page-input" name="page_end_232" id="id_page_end_232">
+          <input type="number" class="form-control page-input" name="page_end_232" id="id_page_end_232" value="{{ form.page_end_232.value }}">
         </div>
         <div class="form-group">
           <label class="control-label" for="id_total_funds_232">Total funds:</label>
           <input type="text"
                  class="form-control"
                  name="total_funds_232"
-                 id="id_total_funds_232">
+                 id="id_total_funds_232" value="{{ form.total_funds_232.value }}">
         </div>
         <div class="form-group form-check form-check-inline">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="no_pages_232" id="id_no_pages_232" value="option1"> No table
+            {{ form.no_pages_232 }} No table
           </label>
         </div>
       </div>
+      {% if form.errors.no_pages_232 %}<span class="help-block">{{ form.errors.no_pages_232 }}</span>{% endif %}
     </div>
   </div>
 </div>
@@ -331,7 +343,7 @@
   <div class="col-md-offset-4 col-md-4">
     <div class="form-group{% if form.errors.date %} has-error{% endif %}">
       <label for="id_date" class="orange">Report date</label>
-      <input type="date" class="form-control" name="date" id="id_date" aria-describedby="date_help" placeholder="Enter report date" required>
+      <input type="date" class="form-control" name="date" id="id_date" aria-describedby="date_help" placeholder="Enter report date" value="{{ form.date.value }}" required>
       {% if form.errors.date %}<span class="help-block">{{ form.errors.date }}</span>{% endif %}
     </div>
   </div>

@@ -60,7 +60,7 @@ class FindTableTask(AbstractTask):
                 ).save()
 
     def after_save(self, verified_data):
-        party = PoliticalParty.objects.get(
+        party = PoliticalParty.objects.get( # TODO optimize , do it in save_verified_data, do we need to separate this function?
             name=verified_data['party_name'],
             legal_id=verified_data['party_legal_id']
         )
