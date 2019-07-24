@@ -136,10 +136,5 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 
 # moonsheep settings
-MOONSHEEP_TASK_SOURCE = 'pybossa'  # 'random' / 'pybossa' -> default 'random'
+# TODO change it
 MOONSHEEP_BASE_TASK = 'opora.tasks.FindTableTask'
-
-# if pybossa is selected
-PYBOSSA_URL = 'http://localhost:5000/'
-PYBOSSA_PROJECT_ID = 1
-PYBOSSA_API_KEY = os.environ.get('PYBOSSA_API_KEY')
