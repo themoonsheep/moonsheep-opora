@@ -6,8 +6,8 @@ from .models import TransactionPages
 
 
 class FindTableForm(forms.Form):
-    party_name = forms.CharField(label="Party name")
-    party_legal_id = forms.CharField(label="Party legal ID")
+    party_name = forms.CharField(label="Party name", initial='')
+    party_legal_id = forms.CharField(label="Party legal ID", initial='')
     date = forms.CharField(label="Report date", widget=forms.SelectDateWidget)
 
     class Meta:
@@ -25,7 +25,7 @@ class FindTableForm(forms.Form):
             self.fields['page_end_{0}'.format(idx)] = \
                 forms.IntegerField(label="Last page number", required=False)
             self.fields['total_funds_{0}'.format(idx)] = \
-                forms.CharField(label="Total received funds", required=False)
+                forms.CharField(label="Total received funds", required=False, initial='')
 
     def clean(self):
         cleaned_data = super(FindTableForm, self).clean()
