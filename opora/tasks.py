@@ -2,6 +2,8 @@ import datetime
 import random
 
 from django.shortcuts import get_object_or_404
+from django.utils.decorators import classproperty
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 from moonsheep.tasks import AbstractTask, register_task
 from moonsheep.verifiers import *
@@ -9,29 +11,22 @@ from moonsheep.verifiers import *
 from .forms import FindTableForm, GetTransactionIdsForm, GetDonationForm, GetReturnForm
 from .models import TransactionPages, PoliticalParty, Report, Donation, Return, Payee
 
+EXAMPLE_URL = static('examples/3кв_PDF_.pdf')
+
 
 @register_task()
 class FindTableTask(AbstractTask):
     """
     Choose pages containing crucial tables and get metadata (party, date)
-    PyBossa task structure:
-    {
-        "url": "https://epf.org.pl/pl/wp-content/themes/epf/images/logo-epanstwo.png",
-        "party": "",
-        "type": "opora.tasks.FindTableTask",
-        "page": "",
-        "record_id": ""
-    }
     """
     template_name = 'tasks/find_table.html'
     task_form = FindTableForm
 
-    def create_mocked_task(self, data):
-        data['info'].update({
-            'url': 'https://nazk.gov.ua/sites/default/files/docs/2017/3/3_kv/2/Agrarna_partija/3%20%EA%E2%E0%F0%F2%E0%EB%202017%20%D6%C0%20%C0%CF%D3%20%97%20%E7%E0%F2%E5%F0%F2%E8%E9.pdf',
-        })
-
-        return data
+    @classproperty
+    def mocked_params(self) -> dict:
+        return {
+            'url': EXAMPLE_URL,
+        }
 
     def verify_party_name(self, values):
         return values[0], 1
@@ -77,7 +72,7 @@ class FindTableTask(AbstractTask):
                     'money_destination': tp.money_destination,
                     'legal_identification': tp.legal_identification
                 }
-                self.create_new_task(GetTransactionIdsTask, params)
+                GetTransactionIdsTask.create(params)
 
 
 @register_task()
@@ -96,32 +91,32 @@ class GetTransactionIdsTask(AbstractTask):
     template_name = 'tasks/get_transaction_ids.html'
     task_form = GetTransactionIdsForm
 
-    def create_mocked_task(self, data):
-        data['info'].update(random.choice([
+    @classproperty
+    def mocked_params(cls) -> dict:
+        return random.choice([
             {
-                'url': 'https://nazk.gov.ua/sites/default/files/docs/2017/3/3_kv/2/Agrarna_partija/3%20%EA%E2%E0%F0%F2%E0%EB%202017%20%D6%C0%20%C0%CF%D3%20%97%20%E7%E0%F2%E5%F0%F2%E8%E9.pdf',
+                'url': EXAMPLE_URL,
                 'page': 46,
                 'money_destination': TransactionPages.POLITICAL_PARTY_ACCOUNT,
                 'transaction_type': TransactionPages.CASH_CONTRIBUTION,
                 'legal_identification': TransactionPages.INDIVIDUAL,
             },
             {
-                'url': 'https://nazk.gov.ua/sites/default/files/docs/2017/3/3_kv/2/Agrarna_partija/3%20%EA%E2%E0%F0%F2%E0%EB%202017%20%D6%C0%20%C0%CF%D3%20%97%20%E7%E0%F2%E5%F0%F2%E8%E9.pdf',
+                'url': EXAMPLE_URL,
                 'page': 74,
                 'money_destination': TransactionPages.POLITICAL_PARTY_ACCOUNT,
                 'transaction_type': TransactionPages.CASH_CONTRIBUTION,
                 'legal_identification': TransactionPages.LEGAL_ENTITY,
             }
-        ]))
-
-        return data
+        ])
 
     def __init__(self, **kwargs):
         super(GetTransactionIdsTask, self).__init__(**kwargs)
-        self.page = kwargs.get('info').get('page')
-        self.transaction_type = kwargs.get('info').get('transaction_type')
-        self.money_destination = kwargs.get('info').get('money_destination')
-        self.legal_identification = kwargs.get('info').get('legal_identification')
+        # TODO find more efficient method to access those
+        # self.page = kwargs.get('info').get('page')
+        # self.transaction_type = kwargs.get('info').get('transaction_type')
+        # self.money_destination = kwargs.get('info').get('money_destination')
+        # self.legal_identification = kwargs.get('info').get('legal_identification')
 
     def verify_ids_list(self, task_runs):
         # Custom implementation that checks for equality of unordered list
@@ -163,31 +158,24 @@ class GetTransactionIdsTask(AbstractTask):
                 'legal_identification': self.legal_identification
             }
             if self.transaction_type == TransactionPages.CASH_CONTRIBUTION:
-                self.create_new_task(GetDonationTask, params)
+                GetDonationTask.create(params)
             else:
-                self.create_new_task(GetReturnTask, params)
+                GetReturnTask.create(params)
 
 
 @register_task()
 class GetDonationTask(AbstractTask):
     """
-    Get donation of transaction idY
-    PyBossa task structure:
-    {
-        "url": "https://epf.org.pl/pl/wp-content/themes/epf/images/logo-epanstwo.png",
-        "party": "1",
-        "type": "opora.tasks.GetTransactionTask",
-        "page": "1",
-        "record_id": "1"
-    }
+    Transcribe donation information of a given transaction id
     """
     template_name = 'tasks/get_donation.html'
     task_form = GetDonationForm
 
-    def create_mocked_task(self, data):
-        data['info'].update(random.choice([
+    @classproperty
+    def mocked_params(self, data) -> dict:
+        return random.choice([
             {
-                'url': 'https://nazk.gov.ua/sites/default/files/docs/2017/3/3_kv/2/Agrarna_partija/3%20%EA%E2%E0%F0%F2%E0%EB%202017%20%D6%C0%20%C0%CF%D3%20%97%20%E7%E0%F2%E5%F0%F2%E8%E9.pdf',
+                'url': EXAMPLE_URL,
                 'page': 46,
                 'transaction_id': random.choice(['@2PL293649', '@2PL293627', '@2PL270721', '5820345SB', '5820344SB', '5820343SB', '5820342SB', '5820341SB', '5820340SB', '5820339SB', '5820328SB', '5820337SB', '5820336SB']),
                 'money_destination': TransactionPages.POLITICAL_PARTY_ACCOUNT,
@@ -195,24 +183,23 @@ class GetDonationTask(AbstractTask):
                 'legal_identification': TransactionPages.INDIVIDUAL,
             },
             {
-                'url': 'https://nazk.gov.ua/sites/default/files/docs/2017/3/3_kv/2/Agrarna_partija/3%20%EA%E2%E0%F0%F2%E0%EB%202017%20%D6%C0%20%C0%CF%D3%20%97%20%E7%E0%F2%E5%F0%F2%E8%E9.pdf',
+                'url': EXAMPLE_URL,
                 'page': 74,
                 'transaction_id': random.choice([353, 20, 203, 257, 754, 12404, 16]),
                 'money_destination': TransactionPages.POLITICAL_PARTY_ACCOUNT,
                 'transaction_type': TransactionPages.CASH_CONTRIBUTION,
                 'legal_identification': TransactionPages.LEGAL_ENTITY,
             }
-        ]))
-
-        return data
+        ])
 
     def __init__(self, **kwargs):
         super(GetDonationTask, self).__init__(**kwargs)
-        self.transaction_id = kwargs.get('info').get('transaction_id')
-        self.page = kwargs.get('info').get('page')
-        self.transaction_type = kwargs.get('info').get('transaction_type')
-        self.money_destination = kwargs.get('info').get('money_destination')
-        self.legal_identification = kwargs.get('info').get('legal_identification')
+        # TODO find more efficient method to access those
+        # self.transaction_id = kwargs.get('info').get('transaction_id')
+        # self.page = kwargs.get('info').get('page')
+        # self.transaction_type = kwargs.get('info').get('transaction_type')
+        # self.money_destination = kwargs.get('info').get('money_destination')
+        # self.legal_identification = kwargs.get('info').get('legal_identification')
 
     def save_verified_data(self, verified_data):
         # TODO: finish & test

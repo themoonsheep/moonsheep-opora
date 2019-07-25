@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-from moonsheep.settings import *
+from moonsheep.settings import *  # NOQA
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -136,5 +136,5 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 
 # moonsheep settings
-# TODO change it
+# TODO change it, is it used?
 MOONSHEEP_BASE_TASK = 'opora.tasks.FindTableTask'

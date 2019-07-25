@@ -12,5 +12,9 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
+MOONSHEEP.update({
+    'DEV_ROTATE_TASKS': True
+})
+
 # MOONSHEEP_TASK_SOURCE = 'random'
 # MOONSHEEP_DEVELOPMENT_MODE = True
