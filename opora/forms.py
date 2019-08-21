@@ -7,8 +7,8 @@ from .models import TransactionPages
 
 class FindTableForm(forms.Form):
     party_name = forms.CharField(label="Party name", initial='')
-    party_legal_id = forms.CharField(label="Party legal ID", initial='')
-    date = forms.CharField(label="Report date", widget=forms.SelectDateWidget)
+    party_legal_id = forms.CharField(label="Party legal ID", initial='')  # TODO in model it is int, what it should be?
+    date = forms.DateField(label="Report date")
 
     class Meta:
         localized_fields = '__all__'
@@ -67,7 +67,7 @@ class GetTransactionIdsForm(forms.Form):
 
 
 class GetTransactionForm(forms.Form):
-    receipt_date = forms.CharField(label="Receipt date", widget=forms.SelectDateWidget)
+    receipt_date = forms.DateField(label="Receipt date")
     amount = forms.CharField(label="Transaction amount")
     # payee
     payee_name = forms.CharField(label="Payee name")
@@ -86,7 +86,7 @@ class GetDonationForm(GetTransactionForm):
 
 
 class GetReturnForm(GetTransactionForm):
-    date = forms.CharField(label="Return date", widget=forms.SelectDateWidget)
+    date = forms.DateField(label="Return date")
     document_id = forms.CharField(label="Return document ID")
     explanation = forms.CharField(label="Return explanation")
     amount_to_payee = forms.CharField(label="Return amount to payee")

@@ -1,7 +1,7 @@
 {% extends "tasks/base_form.html" %}
 
 {% block task-form %}
-<h3>Scroll the document to page {{ task.page }}. Find transaction (return) with bank ID = {{ task.transaction_id }} and rewrite it:</h3>
+<h3>Scroll the document to page {{ task.params.page }}. Find transaction (return) with bank ID = {{ task.params.transaction_id }} and rewrite it:</h3>
 
 <section class="row" id="section1-1">
 <div class="col-md-12">
@@ -77,7 +77,7 @@
             {% if form.errors.amount %}<span class="help-block">{{ form.errors.amount }}</span>{% endif %}
           </td>
           <td class="form-group{% if form.errors.transaction_id %} has-error{% endif %}">
-            <input type="text" class="form-control input-sm" id="id_transaction_id" value="{{ task.transaction_id }}" disabled />
+            <input type="text" class="form-control input-sm" id="id_transaction_id" value="{{ task.params.transaction_id }}" disabled />
             {% if form.errors.transaction_id %}<span class="help-block">{{ form.errors.transaction_id }}</span>{% endif %}
           </td>
           <td class="form-group{% if form.errors.payee_name %} has-error{% endif %}">

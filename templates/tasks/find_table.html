@@ -344,7 +344,6 @@
     <div class="form-group{% if form.errors.date %} has-error{% endif %}">
       <label for="id_date" class="orange">Report date</label>
       <input type="date" class="form-control" name="date" id="id_date" aria-describedby="date_help" placeholder="Enter report date" value="{{ form.date.value }}" required>
-      <!-- TODO proper date format: dd.mm.yyyy -->
       {% if form.errors.date %}<span class="help-block">{{ form.errors.date }}</span>{% endif %}
     </div>
   </div>

@@ -37,9 +37,9 @@ class FindTableTask(AbstractTask):
             legal_id=verified_data['party_legal_id']
         )
         report, created = Report.objects.get_or_create(
-            date=datetime.datetime.strptime(verified_data['date'], "%Y-%m-%d"),
+            date=verified_data['date'],
             party=party,
-            url=self.url
+            url=self.params['url']
         )
         for md, tt, li in TransactionPages.iterations():
             idx = "{0}{1}{2}".format(md, tt, li)
@@ -60,13 +60,13 @@ class FindTableTask(AbstractTask):
             legal_id=verified_data['party_legal_id']
         )
         report = Report.objects.get(
-            date=datetime.datetime.strptime(verified_data['date'], "%Y-%m-%d"),
+            date=verified_data['date'],
             party=party
         )
         for tp in TransactionPages.objects.filter(report=report):
             for page in range(tp.page_start, tp.page_end + 1):
                 params = {
-                    'url': self.url,
+                    'url': self.params['url'],
                     'page': page,
                     'transaction_type': tp.transaction_type,
                     'money_destination': tp.money_destination,
@@ -79,14 +79,6 @@ class FindTableTask(AbstractTask):
 class GetTransactionIdsTask(AbstractTask):
     """
     List IDs of transactions on a page X
-    PyBossa task structure:
-    {
-        "url": "https://epf.org.pl/pl/wp-content/themes/epf/images/logo-epanstwo.png",
-        "party": "1",
-        "type": "opora.tasks.GetTransactionIdsTask",
-        "page": "1",
-        "record_id": ""
-    }
     """
     template_name = 'tasks/get_transaction_ids.html'
     task_form = GetTransactionIdsForm
@@ -110,14 +102,6 @@ class GetTransactionIdsTask(AbstractTask):
             }
         ])
 
-    def __init__(self, **kwargs):
-        super(GetTransactionIdsTask, self).__init__(**kwargs)
-        # TODO find more efficient method to access those
-        # self.page = kwargs.get('info').get('page')
-        # self.transaction_type = kwargs.get('info').get('transaction_type')
-        # self.money_destination = kwargs.get('info').get('money_destination')
-        # self.legal_identification = kwargs.get('info').get('legal_identification')
-
     def verify_ids_list(self, task_runs):
         # Custom implementation that checks for equality of unordered list
         # task_runs[0]['ids'] == task_runs[x]['ids']
@@ -134,28 +118,28 @@ class GetTransactionIdsTask(AbstractTask):
                 Donation.objects.get_or_create(
                     report=report,
                     bank_document_id=transaction_id,
-                    page=self.page,
-                    transaction_type=self.transaction_type,
-                    money_destination=self.money_destination,
+                    page=self.params['page'],
+                    transaction_type=self.params['transaction_type'],
+                    money_destination=self.params['money_destination'],
                 )
             else:
                 Return.objects.get_or_create(
                     report=report,
                     bank_document_id=transaction_id,
-                    page=self.page,
-                    transaction_type=self.transaction_type,
-                    money_destination=self.money_destination
+                    page=self.params['page'],
+                    transaction_type=self.params['transaction_type'],
+                    money_destination=self.params['money_destination']
                 )
 
     def after_save(self, verified_data):
         for transaction_id in verified_data['transaction_ids']:
             params = {
-                'url': self.url,
+                'url': self.params['url'],
                 'transaction_id': transaction_id,
-                'page': self.page,
-                'transaction_type': self.transaction_type,
-                'money_destination': self.money_destination,
-                'legal_identification': self.legal_identification
+                'page': self.params['page'],
+                'transaction_type': self.params['transaction_type'],
+                'money_destination': self.params['money_destination'],
+                'legal_identification': self.params['legal_identification']
             }
             if self.transaction_type == TransactionPages.CASH_CONTRIBUTION:
                 GetDonationTask.create(params)
@@ -172,7 +156,7 @@ class GetDonationTask(AbstractTask):
     task_form = GetDonationForm
 
     @classproperty
-    def mocked_params(self, data) -> dict:
+    def mocked_params(self) -> dict:
         return random.choice([
             {
                 'url': EXAMPLE_URL,
@@ -192,19 +176,10 @@ class GetDonationTask(AbstractTask):
             }
         ])
 
-    def __init__(self, **kwargs):
-        super(GetDonationTask, self).__init__(**kwargs)
-        # TODO find more efficient method to access those
-        # self.transaction_id = kwargs.get('info').get('transaction_id')
-        # self.page = kwargs.get('info').get('page')
-        # self.transaction_type = kwargs.get('info').get('transaction_type')
-        # self.money_destination = kwargs.get('info').get('money_destination')
-        # self.legal_identification = kwargs.get('info').get('legal_identification')
-
     def save_verified_data(self, verified_data):
         # TODO: finish & test
         payee, created = Payee.objects.get_or_create(
-            legal_identification=self.legal_identification,
+            legal_identification=self.params['legal_identification'],
             name=verified_data['payee_name'],
             identification=verified_data['payee_identification'],
             address=verified_data['payee_address']
@@ -214,61 +189,62 @@ class GetDonationTask(AbstractTask):
         )
         transaction = Donation.objects.get(
             report=report,
-            bank_document_id=self.transaction_id,
-            transaction_type=self.transaction_type,
-            money_destination=self.money_destination,
-            page=self.page,
+            bank_document_id=self.params['transaction_id'],
+            transaction_type=self.params['transaction_type'],
+            money_destination=self.params['money_destination'],
+            page=self.params['page'],
         )
         transaction.account_type = verified_data['account_type']
         transaction.receipt_date = verified_data['receipt_date']
         transaction.amount = verified_data['amount']
         transaction.payee = payee
         transaction.save()
-        report.finished = True
-        report.save()
+
+        # If there are no more TransactionTasks then this report should be considered as complete
+        # TODO but do we want to flag it here? and check every time? why bother?
+        # if deleted, delete the field as well
+        # report.finished = True
+        # report.save()
 
 
 @register_task()
 class GetReturnTask(AbstractTask):
     """
     Get donation of transaction idY
-    PyBossa task structure:
-    {
-        "url": "https://epf.org.pl/pl/wp-content/themes/epf/images/logo-epanstwo.png",
-        "party": "1",
-        "type": "opora.tasks.GetTransactionTask",
-        "page": "1",
-        "record_id": "1"
-    }
     """
     template_name = 'tasks/get_return.html'
     task_form = GetReturnForm
 
-    def __init__(self, **kwargs):
-        super(GetReturnTask, self).__init__(**kwargs)
-        self.page = kwargs.get('info').get('page')
-        self.transaction_id = kwargs.get('info').get('transaction_id')
-        self.transaction_type = kwargs.get('info').get('transaction_type')
-        self.money_destination = kwargs.get('info').get('money_destination')
-        self.legal_identification = kwargs.get('info').get('legal_identification')
+    @classproperty
+    def mocked_params(self) -> dict:
+        return {
+            'url': EXAMPLE_URL,
+            'page': 46,
+            'transaction_id': random.choice(
+                ['@2PL293649', '@2PL293627', '@2PL270721', '5820345SB', '5820344SB', '5820343SB', '5820342SB',
+                 '5820341SB', '5820340SB', '5820339SB', '5820328SB', '5820337SB', '5820336SB']),
+            'money_destination': TransactionPages.POLITICAL_PARTY_ACCOUNT,
+            'transaction_type': TransactionPages.RETURN_LAW_VIOLATION,
+            'legal_identification': TransactionPages.INDIVIDUAL,
+        }
 
     def save_verified_data(self, verified_data):
         # TODO: finish & test
         payee, created = Payee.objects.get_or_create(
-            legal_identification=self.legal_identification,
+            legal_identification=self.params['legal_identification'],
             name=verified_data['payee_name'],
             identification=verified_data['payee_identification'],
             address=verified_data['payee_address']
         )
         report = Report.objects.get(
-            url=self.url
+            url=self.params['url']
         )
         transaction = Return.objects.get(
             report=report,
-            bank_document_id=self.transaction_id,
-            transaction_type=self.transaction_type,
-            money_destination=self.money_destination,
-            page=self.page,
+            bank_document_id=self.params['transaction_id'],
+            transaction_type=self.params['transaction_type'],
+            money_destination=self.params['money_destination'],
+            page=self.params['page'],
         )
         transaction.date = verified_data['date']
         transaction.document_id = verified_data['document_id']
@@ -279,5 +255,9 @@ class GetReturnTask(AbstractTask):
         transaction.amount = verified_data['amount']
         transaction.payee = payee
         transaction.save()
-        report.finished = True
-        report.save()
+
+        # If there are no more TransactionTasks then this report should be considered as complete
+        # TODO but do we want to flag it here? and check every time? why bother?
+        # if deleted, delete the field as well
+        # report.finished = True
+        # report.save()

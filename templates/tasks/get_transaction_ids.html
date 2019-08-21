@@ -1,26 +1,26 @@
 {% extends "tasks/base_form.html" %}
 
 {% block task-form %}
-<h3>Find transaction IDs on page {{ task.page }}</h3>
+<h3>Find transaction IDs on page {{ task.params.page }}</h3>
 <h4>
-  {% if task.transaction_type == 1 and task.money_destination == 1 %}
+  {% if task.params.transaction_type == 1 and task.params.money_destination == 1 %}
   1.1. Contributions by money to political party accounts
-  {% elif task.transaction_type == 2 and task.money_destination == 1 %}
+  {% elif task.params.transaction_type == 2 and task.params.money_destination == 1 %}
   1.2. Information on the return and transfer to the State Budget of Ukraine funds received in violation of the law on political party accounts
-  {% elif task.transaction_type == 3 and task.money_destination == 1 %}
+  {% elif task.params.transaction_type == 3 and task.params.money_destination == 1 %}
   1.3. Information on the return and transfer to the State Budget of Ukraine funds received by political parties in error
-  {% elif task.transaction_type == 1 and task.money_destination == 2 %}
+  {% elif task.params.transaction_type == 1 and task.params.money_destination == 2 %}
   1.4. Contributions by money to the accounts of the election fund of a political party
-  {% elif task.transaction_type == 2 and task.money_destination == 2 %}
+  {% elif task.params.transaction_type == 2 and task.params.money_destination == 2 %}
   1.5. Information about the return and transfer to the State Budget of Ukraine of cash received in violation of the legislation requirements on the accounts of the election fund
-  {% elif task.transaction_type == 3 and task.money_destination == 2 %}
+  {% elif task.params.transaction_type == 3 and task.params.money_destination == 2 %}
   1.6. Information about the return and transfer to the State Budget of Ukraine of cash received by mistake on the accounts of the election fund
   {% endif %}
 </h4>
 <h4 class="orange">
-  {% if task.legal_identification == 1 %}
+  {% if task.params.legal_identification == 1 %}
   1) from individuals
-  {% elif task.legal_identification == 2 %}
+  {% elif task.params.legal_identification == 2 %}
   2) from legal entities
   {% endif %}
 </h4>
