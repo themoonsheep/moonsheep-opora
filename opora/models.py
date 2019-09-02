@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext as _
+from moonsheep.registry import document
 
 
 class PoliticalParty(models.Model):
@@ -13,6 +14,7 @@ class PoliticalParty(models.Model):
         return self.name
 
 
+@document(on_import_create=['opora.tasks.FindTableTask'])
 class Report(models.Model):
     """
     The whole document to transcript
