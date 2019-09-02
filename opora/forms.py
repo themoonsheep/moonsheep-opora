@@ -2,7 +2,7 @@ from django import forms
 
 from moonsheep.forms import MultipleRangeField
 
-from .models import TransactionPages
+from . import models
 
 
 class FindTableForm(forms.Form):
@@ -15,7 +15,7 @@ class FindTableForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(FindTableForm, self).__init__(*args, **kwargs)
-        for md, tt, li in TransactionPages.iterations():
+        for md, tt, li in models.TransactionPages.iterations():
             idx = '{0}{1}{2}'.format(md, tt, li)
             self.fields['no_pages_{0}'.format(idx)] = \
                 forms.BooleanField(label="No pages", required=False,
@@ -30,7 +30,7 @@ class FindTableForm(forms.Form):
     def clean(self):
         cleaned_data = super(FindTableForm, self).clean()
 
-        for md, tt, li in TransactionPages.iterations():
+        for md, tt, li in models.TransactionPages.iterations():
             idx = '{0}{1}{2}'.format(md, tt, li)
             page_start = cleaned_data.get("page_start_{0}".format(idx))
             page_end = cleaned_data.get("page_end_{0}".format(idx))
