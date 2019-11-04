@@ -23,20 +23,17 @@ class Report(models.Model):
     url = models.URLField(verbose_name=_("report URL"), unique=True)
 
     # task 1
-    date = models.DateField(verbose_name=_("report date"))
+    # TODO would be good to distinguish required/null on document creation (when we want to create "empty" document vs required one cross-checked (when we want to enforce rules)
+    date = models.DateField(verbose_name=_("report date"), null=True)
     # Party that is referred in report. This field will be copied to created Transactions
     party = models.ForeignKey(
-        to="opora.PoliticalParty", verbose_name=_("related parties"), on_delete=models.PROTECT
+        to="opora.PoliticalParty", verbose_name=_("related parties"), on_delete=models.PROTECT, null=True
     )
-    # transactionpages_set
-
-    # task 2
-    # transaction_set
 
     finished = models.BooleanField(verbose_name=_("object completely translated"), default=False)
 
     def __str__(self):
-        return "{0}".format(self.date)
+        return f"{self.date}" if self.date else str(self.id)
 
     class Meta:
         unique_together = ['date', 'party']
