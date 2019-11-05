@@ -72,7 +72,7 @@ class FindTableTask(AbstractTask):
                     'money_destination': tp.money_destination,
                     'legal_identification': tp.legal_identification
                 }
-                GetTransactionIdsTask.create(params)
+                GetTransactionIdsTask.create(params, parent=self.instance)
 
 
 @register_task()
@@ -142,9 +142,9 @@ class GetTransactionIdsTask(AbstractTask):
                 'legal_identification': self.params['legal_identification']
             }
             if self.transaction_type == TransactionPages.CASH_CONTRIBUTION:
-                GetDonationTask.create(params)
+                GetDonationTask.create(params, parent=self.instance)
             else:
-                GetReturnTask.create(params)
+                GetReturnTask.create(params, parent=self.instance)
 
 
 @register_task()
