@@ -13,6 +13,9 @@ class PoliticalParty(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "political parties"
+
 
 @document(on_import_create=['opora.tasks.FindTableTask'])
 class Report(models.Model):
@@ -90,6 +93,9 @@ class TransactionPages(models.Model):
             self.get_transaction_type_display(),
             self.get_legal_identification_display()
         )
+
+    class Meta:
+        verbose_name_plural = "transaction pages"
 
     @staticmethod
     def iterations():

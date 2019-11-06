@@ -32,15 +32,19 @@ class FindTableTask(AbstractTask):
         return values[0], 1
 
     def save_verified_data(self, verified_data):
+        # Create Political Party
         party, created = PoliticalParty.objects.get_or_create(
             name=verified_data['party_name'],
             legal_id=verified_data['party_legal_id']
         )
-        report, created = Report.objects.get_or_create(
-            date=verified_data['date'],
-            party=party,
-            url=self.params['url']
-        )
+
+        # Fill-in report data
+        report = Report.objects.get(url=self.params['url'])
+        report.date = verified_data['date']
+        report.party = party
+        report.save()
+
+        # Save page ranges
         for md, tt, li in TransactionPages.iterations():
             idx = "{0}{1}{2}".format(md, tt, li)
             if not verified_data['no_pages_{0}'.format(idx)]:
@@ -52,10 +56,11 @@ class FindTableTask(AbstractTask):
                     money_destination=md,
                     transaction_type=tt,
                     legal_identification=li
-                ).save()
+                ).save()  # TODO what if this is an update?
 
     def after_save(self, verified_data):
-        party = PoliticalParty.objects.get( # TODO optimize , do it in save_verified_data, do we need to separate this function?
+        party = PoliticalParty.objects.get(
+            # TODO optimize , do it in save_verified_data, do we need to separate this function?
             name=verified_data['party_name'],
             legal_id=verified_data['party_legal_id']
         )
@@ -72,7 +77,8 @@ class FindTableTask(AbstractTask):
                     'money_destination': tp.money_destination,
                     'legal_identification': tp.legal_identification
                 }
-                GetTransactionIdsTask.create(params, parent=self.instance)
+                # Priority > 0.5 (default) means we go depth-first, finish report and then start another
+                GetTransactionIdsTask.create(params=params, parent=self.instance, priority=0.6)
 
 
 @register_task()
@@ -161,7 +167,9 @@ class GetDonationTask(AbstractTask):
             {
                 'url': EXAMPLE_URL,
                 'page': 46,
-                'transaction_id': random.choice(['@2PL293649', '@2PL293627', '@2PL270721', '5820345SB', '5820344SB', '5820343SB', '5820342SB', '5820341SB', '5820340SB', '5820339SB', '5820328SB', '5820337SB', '5820336SB']),
+                'transaction_id': random.choice(
+                    ['@2PL293649', '@2PL293627', '@2PL270721', '5820345SB', '5820344SB', '5820343SB', '5820342SB',
+                     '5820341SB', '5820340SB', '5820339SB', '5820328SB', '5820337SB', '5820336SB']),
                 'money_destination': TransactionPages.POLITICAL_PARTY_ACCOUNT,
                 'transaction_type': TransactionPages.CASH_CONTRIBUTION,
                 'legal_identification': TransactionPages.INDIVIDUAL,

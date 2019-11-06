@@ -13,7 +13,8 @@ INTERNAL_IPS = [
 ]
 
 MOONSHEEP.update({
-    'DEV_ROTATE_TASKS': True
+    'DEV_ROTATE_TASKS': False,
+    'MIN_ENTRIES_TO_CROSSCHECK': 1,
 })
 
 # MOONSHEEP_TASK_SOURCE = 'random'
