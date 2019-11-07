@@ -1,3 +1,4 @@
+from django.core import validators
 from django.db import models
 from django.utils.translation import ugettext as _
 from moonsheep.registry import document
@@ -24,6 +25,10 @@ class Report(models.Model):
     """
     # initial data
     url = models.URLField(verbose_name=_("report URL"), unique=True)
+    progress = models.DecimalField(decimal_places=3, max_digits=6, default=0,
+                                   validators=[validators.MaxValueValidator(100), validators.MinValueValidator(0)])
+
+    # TODO in the API return only those reports that have been verified (those with set date)
 
     # task 1
     # TODO would be good to distinguish required/null on document creation (when we want to create "empty" document vs required one cross-checked (when we want to enforce rules)

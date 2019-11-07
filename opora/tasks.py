@@ -80,6 +80,9 @@ class FindTableTask(AbstractTask):
                 # Priority > 0.5 (default) means we go depth-first, finish report and then start another
                 GetTransactionIdsTask.create(params=params, parent=self.instance, priority=0.6)
 
+    def average_subtasks_count(self):
+        return 6
+
 
 @register_task()
 class GetTransactionIdsTask(AbstractTask):
@@ -152,6 +155,9 @@ class GetTransactionIdsTask(AbstractTask):
             else:
                 GetReturnTask.create(params, parent=self.instance)
 
+    def average_subtasks_count(self):
+        return 20
+
 
 @register_task()
 class GetDonationTask(AbstractTask):
@@ -214,6 +220,9 @@ class GetDonationTask(AbstractTask):
         # report.finished = True
         # report.save()
 
+    def average_subtasks_count(self):
+        return 0
+
 
 @register_task()
 class GetReturnTask(AbstractTask):
@@ -269,3 +278,6 @@ class GetReturnTask(AbstractTask):
         # if deleted, delete the field as well
         # report.finished = True
         # report.save()
+
+    def average_subtasks_count(self):
+        return 0
