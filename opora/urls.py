@@ -28,7 +28,7 @@ from moonsheep.views import ChooseNicknameView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^moonsheep/', include('moonsheep.urls')),
-
+    url(r'^$', TemplateView.as_view(template_name='homepage.html'), name='finish-transcription'),
     url(r'^$', TemplateView.as_view(template_name='homepage.html'), name='home'),
     url(r'^transcription/$', TranscriptionView.as_view(), name='transcription'),
     path('get-a-nickname', ChooseNicknameView.as_view(template_name='nickname.html'), name='choose-nickname'),

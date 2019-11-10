@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{% static "css/jquery-ui.structure.min.css" %}">
     <link rel="stylesheet" href="{% static "css/jquery-ui.theme.min.css" %}">
     <link rel="stylesheet" href="{% static "css/form.css" %}">
+    <link rel="stylesheet" href="{% static "css/moonsheep_style.css" %}">
 
     <script src="{% static "js/layout/compatibility.js" %}"></script>
     <!-- This snippet is used in production (included from viewer.html) -->
@@ -51,7 +52,13 @@
   </head>
 
   <body tabindex="1" class="loadingInProgress">
-
+    {% if messages %}
+    <ul class="ms-messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|safe }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
 <!-- overlay -->
     <form class="overlay" id="main" method="post">
