@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load static %}
+{% load moonsheep %}
 
 {% block content %}
 <div class="container-fluid">
@@ -46,17 +47,18 @@
   <section class="row">
     <div class="col-md-8 col-md-offset-3">
       <h2 class="blue">Сатистика</h2>
+      {% stats_documents_verified as docs %}
 
       <div class="main-percentage row">
-        <div class="col-md-2 number">23%</div>
+        <div class="col-md-2 number">{{ docs.total_progress|floatformat:0 }}%</div>
         <div class="col-md-10">
           <div class=" prog-bar">
-            <div class="prog-bar-fill" style="width: 23%;"></div>
+            <div class="prog-bar-fill" style="width: {{ docs.total_progress|floatformat:0 }}%;"></div>
           </div>
         </div>
       </div>
       <p class="blue">
-        Ми разом оцифрували <span class="digit">675</span> документів з доступних <span class="digit">1137</span>. Залишилось опрацювати <span class="digit">472</span> документів
+        Ми разом оцифрували <span class="digit">{{ docs.verified }}</span> документів з доступних <span class="digit">{{ docs.total }}</span>. Залишилось опрацювати <span class="digit">{{ docs.remaining }}</span> документів
       </p>
     </div>
   </section>
