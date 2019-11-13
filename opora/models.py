@@ -24,7 +24,7 @@ class Report(models.Model):
     The whole document to transcript
     """
     # initial data
-    url = models.URLField(verbose_name=_("report URL"), unique=True)
+    url = models.URLField(verbose_name=_("report URL"), unique=True, max_length=2048)
     progress = models.DecimalField(decimal_places=3, max_digits=6, default=0,
                                    validators=[validators.MaxValueValidator(100), validators.MinValueValidator(0)])
 
