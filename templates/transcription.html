@@ -78,5 +78,17 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     {% block scripts %}{% endblock %}
+
+    <!-- TODO pack it as snippet import support_manual_verification -->
+    {% if entries_data %}
+      <script src="{% static 'js/manual-verification.js' %}"></script>
+      {{ entries_data|json_script:"entries-data" }}
+
+      <script type="text/javascript">
+      jQuery(document).ready(function() {
+        support_manual_verification( JSON.parse(document.getElementById('entries-data').textContent) );
+      });
+      </script>
+    {% endif %}
   </body>
 </html>
