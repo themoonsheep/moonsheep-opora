@@ -1,6 +1,7 @@
 {% extends "transcription.html" %}
 
 {% load static %}
+{% load i18n %}
 {% load moonsheep %}
 
 {% block content %}
@@ -23,14 +24,16 @@
       {% endblock %}
       </div>
     </div>
-{#    <div class="row-fluid">#}
-{#      <div class="col-md-3 col-md-offset-3 text-center">#}
-        <button type="submit" class="button large-button">уявити</button>
-{#      </div>#}
-{#      <div class="col-md-3 text-center">#}
-{#        <button type="submit" class="button">уявити</button>#}
-{#      </div>#}
-{#    </div>#}
+    <div class="row-fluid">
+      <div class="col-md-6 col-md-offset-3 text-center">
+        <button type="submit" class="button large-button" style="display:inline-block;" name="_action" value="save">уявити</button>
+
+        <button type="submit" class="button large-button" style="display:inline-block;" name="_action" value="skip"
+          formnovalidate="formnovalidate">{% trans "Skip to next" %}</button>
+        <button type="submit" class="button large-button" style="display:inline-block;" name="_action" value="cancel"
+          formnovalidate="formnovalidate">{% trans "Cancel" %}</button>
+      </div>
+    </div>
   </form>
   {% endblock %}
 </div>
