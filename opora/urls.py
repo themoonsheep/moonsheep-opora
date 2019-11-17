@@ -22,7 +22,7 @@ from .tasks import *
 from .views import TranscriptionView
 from .tasks import *  # Keep it to make Moonsheep aware of defined tasks
 
-from moonsheep.api import AppApi
+from moonsheep.exporters.api import AppApi
 from moonsheep.views import ChooseNicknameView
 
 urlpatterns = [
@@ -34,7 +34,7 @@ urlpatterns = [
     path('get-a-nickname', ChooseNicknameView.as_view(template_name='nickname.html'), name='choose-nickname'),
     url(r'^thank-you/$', TemplateView.as_view(template_name='thankyou.html'), name='thank-you'),
 
-    url(r'^api/opora/', AppApi('opora').urls),
+    path('api/opora/', AppApi('opora').urls, name='api-opora'),
     url(r'^api-auth/', include('rest_framework.urls'))
 ]
 
