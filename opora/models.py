@@ -2,6 +2,7 @@ from django.core import validators
 from django.db import models
 from django.utils.translation import ugettext as _
 from moonsheep.registry import document
+from moonsheep.models import DocumentModel
 
 
 class PoliticalParty(models.Model):
@@ -19,14 +20,10 @@ class PoliticalParty(models.Model):
 
 
 @document(on_import_create=['opora.tasks.FindTableTask'])
-class Report(models.Model):
+class Report(DocumentModel):
     """
     The whole document to transcript
     """
-    # initial data
-    url = models.URLField(verbose_name=_("report URL"), unique=True, max_length=2048)
-    progress = models.DecimalField(decimal_places=3, max_digits=6, default=0,
-                                   validators=[validators.MaxValueValidator(100), validators.MinValueValidator(0)])
 
     # TODO in the API return only those reports that have been verified (those with set date)
 

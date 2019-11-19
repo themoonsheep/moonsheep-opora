@@ -12,8 +12,8 @@ class PoliticalPartyAdmin(admin.ModelAdmin):
 
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
-    list_display = ['date', 'party']
-    ordering = ['-date'] # TODO index
+    list_display = ['date', 'party', 'progress']
+    ordering = ['-progress'] # TODO index
 
 
 @admin.register(TransactionPages)
