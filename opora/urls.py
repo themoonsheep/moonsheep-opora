@@ -34,7 +34,7 @@ urlpatterns = [
     path('get-a-nickname', ChooseNicknameView.as_view(template_name='nickname.html'), name='choose-nickname'),
     url(r'^thank-you/$', TemplateView.as_view(template_name='thankyou.html'), name='thank-you'),
 
-    path('api/opora/', AppApi('opora').urls, name='api-opora'),
+    path('api/opora/', include(AppApi('opora').urls)),
     url(r'^api-auth/', include('rest_framework.urls'))
 ]
 
