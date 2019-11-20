@@ -21,6 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 from moonsheep.settings import *  # NOQA
 
+MOONSHEEP.update({
+    'APP': 'opora'
+})
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
