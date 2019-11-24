@@ -23,7 +23,7 @@ class FindTableTask(AbstractTask):
     task_form = FindTableForm
 
     @classproperty
-    def mocked_params(self) -> dict:
+    def mocked_params(cls) -> dict:
         return {
             'url': EXAMPLE_URL,
         }
@@ -116,6 +116,7 @@ class GetTransactionIdsTask(AbstractTask):
         # task_runs[0]['ids'] == task_runs[x]['ids']
 
         # return [1,2,3,10]
+        # TODO does it work?
         return task_runs, 1
 
     # verify_ids_list = UnorderedSetVerifier('ids')  # Verifier must need to know on which field to operate
